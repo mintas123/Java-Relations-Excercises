@@ -29,61 +29,26 @@ public class Dog implements Serializable {
 
     public static void writeExtent(ObjectOutputStream oos) {
         try {
-            oos.write(extent.size());
+            oos.writeObject(getExtent());
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Whoops, extent size writing error");
+            System.out.println("Error writing objects");
         }
-        extent.stream().forEach(dog -> dog.write(oos));
     }
 
     public static void readExtent(ObjectInputStream ois) {
-        extent.clear();
-        int count = 4;
-//        try {
-//            count = ois.readInt();
-//        } catch (IOException io) {
-//            io.printStackTrace();
-//        }
-        Dog dog = null;
-        for (int i = 0; i < count; i++) {
-            dog = new Dog();
-            dog.read(ois);
-        }
-    }
-
-    private void write(ObjectOutputStream objectOutputStream) {
         try {
-            objectOutputStream.writeObject(this);
+            List<Dog> readObject = (List<Dog>) ois.readObject();
+            extent = readObject;
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error writing object: \n" + this.toString());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error reading objects");
         }
-    }
-
-    private void read(ObjectInputStream objectInputStream) {
-
-        try {
-            Dog serialized = (Dog) objectInputStream.readObject();
-            this.name = serialized.name;
-            this.birthday = serialized.birthday;
-            this.races = serialized.races;
-            this.vetCheckups = serialized.vetCheckups;
-            this.sterilised = serialized.sterilised;
-        } catch (IOException io) {
-            io.printStackTrace();
-            System.out.println("Error reading object");
-        } catch (ClassNotFoundException cnf) {
-            cnf.printStackTrace();
-            System.out.println("Error parsing class");
-        }
-
     }
     ///////////
 
-
-    public Dog() {
-    }
 
     public Dog(String name, LocalDate birthday, List<String> races) {
         super();

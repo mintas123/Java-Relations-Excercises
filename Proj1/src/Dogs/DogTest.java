@@ -68,6 +68,7 @@ class DogTest {
 //        Dog d5 = new Dog("Karbon", LocalDate.of(2015, Month.AUGUST, 12),null);
 //        Dog d6 = new Dog("Karbon", LocalDate.of(2015, Month.AUGUST, 12),new ArrayList<>());
 //        Dog d7 = new Dog("Luna", LocalDate.of(2015, Month.APRIL, 25), Arrays.asList("German Shepherd"),null);
+
 //         illegal operations
 //        d1.removeCheckup(dates2.get(1));
 //        d2.removeRace("German Shepherd");
@@ -75,21 +76,23 @@ class DogTest {
 //        d2.addRace(null);
 //        d3.addCheckup(null);
 
-        System.out.println("\nExtent in the end:");
+        System.out.println("\nExtent after alterations:");
         System.out.println(Dog.getExtent());
         System.out.println(Dog.getRaceSet());
 
 
         // serialization
+        System.out.print("\nSerialization write...");
         try {
             ObjectOutputStream oos = new ObjectOutputStream((new FileOutputStream("dog_data.dat")));
             Dog.writeExtent(oos);
             oos.close();
+            System.out.print(" Completed. \n");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
+        System.out.println("\nSerialization read:");
         try {
             ObjectInputStream ois = new ObjectInputStream((new FileInputStream("dog_data.dat")));
             Dog.readExtent(ois);
@@ -98,6 +101,7 @@ class DogTest {
             e.printStackTrace();
         }
         System.out.println(Dog.getExtent());
+        System.out.println("Method find by race: \n"+Dog.findByRace("Cockier Spaniel"));
 
 
     }
