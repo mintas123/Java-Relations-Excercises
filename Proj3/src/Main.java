@@ -22,10 +22,10 @@ import java.util.EnumSet;
 
 public class Main {
     public static void main(String[] args) {
-//        testAbstract();
-//        testOverlapping();
-//        testDynamicInheritance();
-//        testMultliInheritance();
+        testAbstract();
+        testOverlapping();
+        testDynamicInheritance();
+        testMultliInheritance();
         testMultiAspectInheritance();
     }
 
@@ -97,6 +97,7 @@ public class Main {
 
 //        worker1.giveHoliday(worker2manager.getId(), LocalDate.now(), LocalDate.of(2020, Month.MAY, 25));
         worker1.reportManager(manager2worker.getId());
+        ma
         worker2manager.setManagerRole(LocalDate.now());
         manager2worker.setRegularRole();
 //        worker2manager.reportManager(manager2worker.getId());

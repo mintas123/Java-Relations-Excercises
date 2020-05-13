@@ -28,6 +28,21 @@ public class User implements IBasicUser, IModerator, IAdmin {
     private EnumSet<UserRole> roles = EnumSet.noneOf(UserRole.class);
     private boolean isBanned = false;
 
+
+
+    public User(String username, LocalDate joinDate, EnumSet<UserRole> roles) {
+        setUsername(username);
+        setJoinDate(joinDate);
+        checkIfNullRoles(roles);
+        for (UserRole role : roles) {
+            this.roles.add(role);
+        }
+        this.id = idCounter;
+
+        idCounter++;
+        extent.add(this);
+    }
+
     @Override
     public void banUser(int userId) {
         if (roles.contains(UserRole.ADMIN)) {
@@ -48,7 +63,7 @@ public class User implements IBasicUser, IModerator, IAdmin {
         }
         if (roles.contains(UserRole.MODERATOR)) {
             if (userRole.equals(UserRole.ADMIN)) {
-                throw new IllegalArgumentException("Moderator cannot promote to admin! account");
+                throw new IllegalArgumentException("Moderator cannot promote to admin account!");
             }
             User userToPromote = findUser(userId);
             if (userToPromote.roles.contains(UserRole.ADMIN)) {
@@ -80,20 +95,6 @@ public class User implements IBasicUser, IModerator, IAdmin {
 
     }
 
-
-    public User(String username, LocalDate joinDate, EnumSet<UserRole> roles) {
-        setUsername(username);
-        setJoinDate(joinDate);
-        checkIfNullRoles(roles);
-        for (UserRole role : roles) {
-            this.roles.add(role);
-        }
-        this.id = idCounter;
-
-        idCounter++;
-        extent.add(this);
-
-    }
 
     public int getId() {
         return id;
@@ -139,19 +140,6 @@ public class User implements IBasicUser, IModerator, IAdmin {
     private void setBanned(boolean banned) {
         isBanned = banned;
     }
-    //    public List<String> getComments() {
-//        return Collections.unmodifiableList(comments);
-//    }
-//
-//    public void addComment(String comment) {
-//        checkIfNull(comment);
-//        comments.add(comment);
-//    }
-//
-//    public void removeComment(String comment) {
-//        checkIfNull(comment);
-//        comments.remove(comment);
-//    }
 
 
     public List<LocalDate> getReports() {

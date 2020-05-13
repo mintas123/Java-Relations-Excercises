@@ -25,6 +25,9 @@ public class GTAGame extends Shooter implements IRacing {
 
     @Override
     public void setRacingType(RacingType racingType) {
+        if (racingType == null) {
+            throw new IllegalArgumentException("racingType cannot be null");
+        }
         this.racingType = racingType;
     }
 
@@ -35,6 +38,9 @@ public class GTAGame extends Shooter implements IRacing {
 
     @Override
     public void setRacingWorldType(RacingWorldType racingWorldType) {
+        if (racingWorldType == null) {
+            throw new IllegalArgumentException("worldType cannot be null");
+        }
         this.racingWorldType = racingWorldType;
     }
 

@@ -14,6 +14,12 @@ public class Racing extends Game implements IRacing {
 
     public Racing(String name, LocalDate releaseDate, double budget, RacingType racingType, RacingWorldType worldType) {
         super(name, releaseDate, budget);
+        if (racingType == null) {
+            throw new IllegalArgumentException("racingType cannot be null");
+        }
+        if (worldType == null) {
+            throw new IllegalArgumentException("worldType cannot be null");
+        }
         this.racingType = racingType;
         this.racingWorldType = worldType;
     }
