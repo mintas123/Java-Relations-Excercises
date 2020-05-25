@@ -34,8 +34,6 @@ public class Student {
         this.id = "S" + counter;
         checkIfNull(name);
         checkIfNull(lastName);
-        this.name = name;
-        this.lastName = lastName;
 
         counter++;
         extent.add(this);

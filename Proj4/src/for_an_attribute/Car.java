@@ -2,8 +2,9 @@ package for_an_attribute;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Comparator;
 import java.util.List;
 
 import static utils.Utils.checkIfNull;
@@ -16,7 +17,7 @@ public class Car {
     private int yearOfProduction;
 
     // free periodic inspection when done every year (else paid)
-    private LinkedList<LocalDate> inspectionList = new LinkedList<>();
+    private List<LocalDate> inspectionList = new ArrayList<>();
 
     public Car(String owner, String brand, String model, int yearOfProduction) {
         setOwner(owner);
@@ -40,7 +41,9 @@ public class Car {
         if (inspectionList.isEmpty()) {
             inspectionList.add(inspection);
         }
-        LocalDate last = inspectionList.getLast();
+        LocalDate last = inspectionList.stream()
+                .max(Comparator.comparing(LocalDate::toEpochDay))
+                .get();
 
         Duration between = Duration.between(last.atStartOfDay(), inspection.atStartOfDay());
         long days = between.toDays();
@@ -84,7 +87,7 @@ public class Car {
     }
 
     public void setYearOfProduction(int yearOfProduction) {
-        if(yearOfProduction < 1990) {
+        if (yearOfProduction < 1990) {
             throw new IllegalArgumentException("Cars before 1990 cannot be maintained here!");
         }
         this.yearOfProduction = yearOfProduction;

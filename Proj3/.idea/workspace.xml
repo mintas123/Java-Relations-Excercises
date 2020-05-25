@@ -2,34 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d4b85b9-a808-42b0-afb0-eaa7c73dd181" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Proj4/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/Proj4.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/bag/Owner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/bag/Pet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/custom/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/custom/ShoppingBasket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/custom/ShoppingItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/for_an_attribute/Car.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/ordered/Student.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/ordered/Tutorial.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/subset/Group.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/subset/Student.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/unique/BankAccount.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/utils/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/xor/PRDepartment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/xor/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/xor/Soldier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Proj4/src/xor/SpecialForces.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/multi_inheritance/GTAGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/multi_inheritance/GTAGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/multi_inheritance/Racing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/multi_inheritance/Racing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/overlapping_inheritance/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/overlapping_inheritance/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Proj4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Proj4/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Proj4/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Proj4/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Proj4/src/for_an_attribute/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Proj4/src/for_an_attribute/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Proj4/src/subset/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Proj4/src/subset/Student.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,7 +20,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dynamic_inheritance/Employee.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="374">
@@ -69,6 +45,18 @@
                 <element signature="e#3787#3788#0" expanded="true" />
                 <element signature="e#4010#4011#0" expanded="true" />
                 <element signature="e#4069#4070#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/multi_inheritance/GTAGame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="337">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -177,6 +165,18 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="dynamic_inheritance" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Proj3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Proj3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="multi_aspect_inheritance" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Proj3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Proj3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="multi_inheritance" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -240,12 +240,12 @@
       <option name="presentableId" value="Default" />
       <updated>1588588709527</updated>
       <workItem from="1588588710986" duration="19435000" />
-      <workItem from="1588958067510" duration="698000" />
+      <workItem from="1588958067510" duration="1312000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33835000" />
+    <option name="totallyTimeSpent" value="34449000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -255,12 +255,12 @@
       <window_info id="UI Designer" order="2" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.18390192" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.18390192" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Find" order="4" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="6" />
@@ -514,16 +514,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/multi_inheritance/GTAGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/multi_aspect_inheritance/Employee.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1224">
@@ -589,6 +579,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/multi_inheritance/GTAGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

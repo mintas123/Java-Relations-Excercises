@@ -19,7 +19,7 @@ import java.time.Month;
 
 public class Main {
     public static void main(String[] args) {
-//        testForAttr();
+        testForAttr();
 //        testUnique();
 //        testSubset();
 //        testOrdered();
