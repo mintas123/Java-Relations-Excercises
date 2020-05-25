@@ -1,6 +1,6 @@
 package utils;
 
-import composition.Folder;
+import composition.ZipFolder;
 
 import java.time.LocalDate;
 
@@ -25,12 +25,12 @@ public class ProjUtils {
         }
     }
 
-    public static void checkIfNull(Folder folder) {
-        if (folder == null) {
-            throw new IllegalArgumentException("not null folder required");
+    public static void checkIfNull(ZipFolder zipFolder) {
+        if (zipFolder == null) {
+            throw new IllegalArgumentException("not null zipFolder required");
         }
-        if (folder.getName().isEmpty()) {
-            throw new IllegalArgumentException("not empty folder required");
+        if (zipFolder.getName().isEmpty()) {
+            throw new IllegalArgumentException("not empty zipFolder required");
         }
     }
 }

@@ -1,4 +1,4 @@
-package basic_and_qualified;
+package basic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -6,21 +6,21 @@ import static utils.ProjUtils.checkIfNull;
 
 public class File {
     private String name;
-    private LocalDate DateCreated;
-    private Folder folder;
+    private LocalDate dateCreated;
+    private ZipFolder zipFolder;
 
-    public File(Folder folder, String name, LocalDate dateCreated) {
+    public File(ZipFolder zipFolder, String name, LocalDate dateCreated) {
         checkIfNull(name);
         checkIfNull(dateCreated);
-        checkIfNull(folder);
+        checkIfNull(zipFolder);
         this.name = name;
-        DateCreated = dateCreated;
-        this.folder = folder;
+        this.dateCreated = dateCreated;
+        this.zipFolder = zipFolder;
     }
 
-    public static File createFile(Folder folder, String name, LocalDate dateCreated) {
-        File file = new File(folder, name, dateCreated);
-        folder.addFile(file);
+    public static File createFile(ZipFolder zipFolder, String name, LocalDate dateCreated) {
+        File file = new File(zipFolder, name, dateCreated);
+        zipFolder.addFile(file);
         return file;
     }
 
@@ -34,19 +34,12 @@ public class File {
     }
 
     public LocalDate getDateCreated() {
-        return DateCreated;
+        return dateCreated;
     }
 
 
-    public Folder getFolder() {
-        return folder;
-    }
-
-    public void changeFolder(String folderName) {
-        checkIfNull(folderName);
-        this.folder.removeFile(this);
-        this.folder = Folder.findFolder(folderName);
-        folder.addFile(this);
+    public ZipFolder getZipFolder() {
+        return zipFolder;
     }
 
 }

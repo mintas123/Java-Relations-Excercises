@@ -7,16 +7,16 @@ import java.util.Set;
 
 import static utils.ProjUtils.checkIfNull;
 
-public class Folder {
+public class ZipFolder {
     private String name;
     private String category;
 
     private List<File> files = new ArrayList<>();
 
     private static Set<File> allFiles = new HashSet<>();
-    private static Set<Folder> extent = new HashSet<>();
+    private static Set<ZipFolder> extent = new HashSet<>();
 
-    public Folder(String name, String category) {
+    public ZipFolder(String name, String category) {
         checkIfNull(name);
         checkIfNull(category);
 
@@ -67,13 +67,13 @@ public class Folder {
         this.category = category;
     }
 
-    public static Folder findFolder(String name) {
-        return extent.stream().filter(folder -> folder.getName().equals(name)).findFirst().get();
+    public static ZipFolder findFolder(String name) {
+        return extent.stream().filter(zipFolder -> zipFolder.getName().equals(name)).findFirst().get();
     }
 
     @Override
     public String toString() {
-        String info = "Folder{" +
+        String info = "ZipFolder{" +
                 "name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", Files:[";

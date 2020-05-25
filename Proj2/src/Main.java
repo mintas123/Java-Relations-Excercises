@@ -1,26 +1,25 @@
-import basic_and_qualified.Owner;
-import basic_and_qualified.Pet;
+import basic.Owner;
+import basic.Pet;
 import composition.File;
-import composition.Folder;
-import withAttribute.OwnerAtr;
-import withAttribute.PetAtr;
+import composition.ZipFolder;
+import qualified.Employee;
+import qualified.Project;
+import with_attribute.Attendee;
+import with_attribute.Course;
+import with_attribute.Meeting;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        try {
 //            testBasic();
-//            testQualified();
-//            testWithAttribute();
-            testComposition();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        testQualified();
+        testWithAttribute();
+//            testComposition();
+
     }
 
     public static void testBasic() {
@@ -58,88 +57,115 @@ public class Main {
     }
 
     public static void testQualified() {
-        Pet pet4 = new Pet(4, "Woof", LocalDate.of(2016, Month.AUGUST, 11));
-        Pet pet5 = new Pet(5, "Purr", LocalDate.of(2013, Month.AUGUST, 11));
-        Pet pet6 = new Pet(6, "Chirp", LocalDate.of(2020, Month.MARCH, 11));
 
+        Project proj1 = new Project("Hydra", LocalDate.of(2021, Month.SEPTEMBER, 11));
+        Project proj2 = new Project("Archangel", LocalDate.of(2022, Month.SEPTEMBER, 11));
+        Project proj3 = new Project("Predator", LocalDate.of(2023, Month.SEPTEMBER, 11));
+        Employee employee1 = new Employee("Daniel", "dan@gmail.com");
+        Employee employee2 = new Employee("Robert", "rob@gmail.com");
+        Employee employee3 = new Employee("Todd", "todd@gmail.com");
 
-        Owner owner3 = new Owner(3, "Jakub", LocalDate.of(1973, Month.MAY, 15), "123123123");
-        Owner owner4 = new Owner(4, "Zofia", LocalDate.of(2000, Month.MAY, 15), "123987456");
+        employee1.addProjectQualif(proj1);
 
-        owner3.addPetQual(pet4);
-        owner3.addPetQual(pet5);
-        owner3.addPetQual(pet6);
-        owner4.addPetQual(pet6);
+        employee1.addProjectQualif(proj2);
+        employee2.addProjectQualif(proj2);
 
-        pet4.addOwnerQual(owner4);
-        pet4.removeOwnerQual(owner4);
+        employee3.addProjectQualif(proj3);
+        employee1.addProjectQualif(proj3);
+        employee2.addProjectQualif(proj3);
 
+        System.out.println("Proj 2 members:");
+        System.out.println(proj2.getWorkers());
 
-        Pet foundPet = owner3.findPetQual("Woof");
-        System.out.println(foundPet.getName() + ":");
-        System.out.println(foundPet.getOwnersNames(true));
+        System.out.println("Extent:");
+        System.out.println(Employee.getExtent());
 
-        Owner foundOwner = pet6.findOwnerQual("Jakub");
-        System.out.println(foundOwner.getName() + ":");
-        System.out.println(foundOwner.getPetsNames(true));
+        System.out.println(employee1.getProjects());
+        System.out.println(employee1.findProject("0_HYDRA"));
+
 
     }
 
     public static void testWithAttribute() {
 
-        List<Integer> list1 = new ArrayList<>(List.of(5, 6));
-        List<Integer> list2 = new ArrayList<>(List.of(5));
-        List<Integer> list3 = new ArrayList<>(List.of(7, 8));
-        List<Integer> list4 = new ArrayList<>(List.of(8));
+        Attendee andrzej = new Attendee("Andrzej");
+        Attendee maciej = new Attendee("Maciej");
+        Attendee daniel = new Attendee("Daniel");
+
+        Course java = new Course("REST services in Java", "usage of blablabla in blablabla", 90);
+        Course cSharp = new Course("Unity with C#", "blablablab", 90);
+        Course cobol = new Course("COBOL for beginners", "sdfsa", 45);
+
+        Meeting meeting1 = new Meeting(java, LocalDateTime.of(2020, Month.MAY, 26, 14, 0));
+        Meeting meeting2 = new Meeting(java, LocalDateTime.of(2020, Month.MAY, 27, 14, 0));
+        Meeting meeting3 = new Meeting(java, LocalDateTime.of(2020, Month.MAY, 28, 14, 0));
 
 
-        PetAtr pet7 = new PetAtr(7, "Skrr", LocalDate.of(2016, Month.AUGUST, 11), list1);
-        PetAtr pet8 = new PetAtr(8, "Brrr", LocalDate.of(2013, Month.AUGUST, 11), list2);
-        PetAtr pet9 = new PetAtr(9, "Krrr", LocalDate.of(2020, Month.MARCH, 11), list2);
+        Meeting meeting4 = new Meeting(cSharp, LocalDateTime.of(2020, Month.APRIL, 26, 15, 0));
+        Meeting meeting5 = new Meeting(cSharp, LocalDateTime.of(2020, Month.APRIL, 27, 15, 0));
+        Meeting meeting6 = new Meeting(cSharp, LocalDateTime.of(2020, Month.APRIL, 28, 15, 0));
+
+        Meeting meeting7 = new Meeting(cobol, LocalDateTime.of(2020, Month.JUNE, 26, 16, 0));
+        Meeting meeting8 = new Meeting(cobol, LocalDateTime.of(2020, Month.JUNE, 27, 16, 0));
+        Meeting meeting9 = new Meeting(cobol, LocalDateTime.of(2020, Month.JUNE, 28, 16, 0));
+
+        andrzej.addCourse(java.getName());
+
+        maciej.addCourse(java.getName());
+        maciej.addCourse(cSharp.getName());
+
+        daniel.addCourse(java.getName());
+        daniel.addCourse(cSharp.getName());
+        daniel.addCourse(cobol.getName());
+
+        andrzej.addMeeting(meeting1.getId());
+        andrzej.addMeeting(meeting2.getId());
+        andrzej.addMeeting(meeting3.getId());
+//        andrzej.addMeeting(meeting4.getId());
 
 
-        OwnerAtr owner5 = new OwnerAtr(5, "Andrzej", LocalDate.of(1973, Month.MAY, 15), "123123123", list3);
-        OwnerAtr owner6 = new OwnerAtr(6, "Jarosław", LocalDate.of(2000, Month.MAY, 15), "123987456", list4);
+        maciej.addMeeting(meeting3.getId());
+        maciej.addMeeting(meeting4.getId());
+        maciej.addMeeting(meeting5.getId());
+        maciej.addMeeting(meeting6.getId());
 
+        daniel.addMeeting(meeting2.getId());
+        daniel.addMeeting(meeting4.getId());
+        daniel.addMeeting(meeting7.getId());
+        daniel.addMeeting(meeting8.getId());
+        daniel.addMeeting(meeting9.getId());
 
-        owner5.addPet(9);
-        pet9.addOwner(5);
-//        owner5.removePet(5);
-//        owner5.removePet(8);
-//        pet7.removeOwner(1);
-//        pet7.removeOwner(5);
+        System.out.println("Daniel courses:");
+        daniel.getCourses().forEach(s -> System.out.println(s));
+        System.out.println("Daniel meetings:");
+        daniel.getMeetings().forEach(integer -> System.out.println(Meeting.findById(integer).getTime()));
+        daniel.removeCourse(cobol.getName());
+        System.out.println("Daniel meetings after resign from 1 course:");
+        daniel.getMeetings().forEach(integer -> System.out.println(Meeting.findById(integer).getTime()));
 
-
-        System.out.println(pet7.getOwners());
-        System.out.println(pet8.getOwners());
-        System.out.println(pet9.getOwners());
-        System.out.println(owner5.getPets());
-        System.out.println(owner6.getPets());
 
     }
 
     public static void testComposition() {
-        Folder folder1 = new Folder("Projects", "School");
-        Folder folder2 = new Folder("Recipies", "Cooking");
+        ZipFolder zipFolder1 = new ZipFolder("Projects", "School");
+        ZipFolder zipFolder2 = new ZipFolder("Recipies", "Cooking");
 
-        File.createFile(folder1, "Proj2_MAS", LocalDate.of(2020, 04, 27));
-        File.createFile(folder1, "Proj1_PRM", LocalDate.now());
+        File.createFile(zipFolder1, "Proj2_MAS", LocalDate.of(2020, 04, 27));
+        File.createFile(zipFolder1, "Proj1_PRM", LocalDate.now());
 
-        File pizza = File.createFile(folder2, "Best pizza", LocalDate.now());
-        File brownie = File.createFile(folder2, "Amazing brownie", LocalDate.now());
-        File mistake = File.createFile(folder2, "Important project", LocalDate.now());
+        File pizza = File.createFile(zipFolder2, "Best pizza", LocalDate.now());
 
 
-        System.out.println(folder1);
-        System.out.println(folder2);
+        System.out.println(zipFolder1);
+        System.out.println(zipFolder2);
 
-//        folder1.addFile(brownie);
-        folder2.removeFile(pizza);
-        mistake.changeFolder(folder1.getName());
+//        zipFolder1.addFile(brownie);
+        zipFolder2.removeFile(pizza);
 
         System.out.println();
-        System.out.println(folder1);
-        System.out.println(folder2);
+        System.out.println(zipFolder1);
+        System.out.println(zipFolder2);
 
     }
+
 }
