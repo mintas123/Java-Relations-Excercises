@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table
@@ -54,11 +55,10 @@ public abstract class Person {
     @Past
     private LocalDate birthday;
 
-    @NotBlank
     private Gender gender;
 
 
-    public Person(@NotBlank String name, @NotBlank String lastName, @Email(message = "Invalid email") String email, @NotBlank String phone, @Size(min = 11, max = 11, message = "PESEL is 11 digits long!") @NotNull String pesel, @Past LocalDate birthday, @NotBlank Gender gender) {
+    public Person(@NotBlank String name, @NotBlank String lastName, @Email(message = "Invalid email") String email, @NotBlank String phone, @Size(min = 11, max = 11, message = "PESEL is 11 digits long!") @NotNull String pesel, @Past LocalDate birthday, Gender gender) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -66,6 +66,11 @@ public abstract class Person {
         this.pesel = pesel;
         this.birthday = birthday;
         this.gender = gender;
+    }
+
+    public int getAge() {
+        LocalDate now = LocalDate.now();
+        return Period.between(this.birthday, now).getYears();
     }
 
     @Override

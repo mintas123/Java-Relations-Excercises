@@ -1,5 +1,6 @@
 package pl.edu.pjatk.s16604.mas_FP.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import java.util.Set;
 
 @Entity
 @Table
-
+@JsonIgnoreProperties(value = {"head"})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,8 +38,8 @@ public class Division {
     private String description;
 
     @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "doctor")
+            fetch = FetchType.EAGER,
+            mappedBy = "personId")
     private Set<Doctor> staff;
 
 
@@ -46,6 +47,19 @@ public class Division {
         this.name = name;
         this.description = description;
     }
+
+    public void addToStaff(Doctor doctor) {
+        if (!staff.contains(doctor)) {
+            staff.add(doctor);
+        }
+    }
+
+    public void removeFromStaff(Doctor doctor) {
+        if (staff.contains(doctor)) {
+            staff.remove(doctor);
+        }
+    }
+
 
     @Override
     public String toString() {

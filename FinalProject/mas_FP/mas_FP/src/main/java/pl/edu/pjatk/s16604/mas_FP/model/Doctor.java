@@ -3,6 +3,7 @@ package pl.edu.pjatk.s16604.mas_FP.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.edu.pjatk.s16604.mas_FP.enums.Gender;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -34,21 +35,36 @@ public class Doctor extends Person {
     private double salary;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "divisionId")
+    @JoinColumn(name = "division_id")
     private Division division;
 
-    private  boolean isHead;
+    private boolean isHead;
+
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "doctor")
+    private Set<Appointment> visits;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "doctor")
-    private Set<Appointment> visits;
+    private Set<Referral> referrals;
+
+    public void addVisit(Appointment appointment) {
+        this.visits.add(appointment);
+    }
+
+    public void removeVisit(Appointment appointment) {
+        if (this.visits.contains(appointment)) {
+            this.visits.remove(appointment);
+        }
+    }
 
     public Doctor(@NotBlank String name, @NotBlank String lastName, @Email(message = "Invalid email") String email,
                   @NotBlank String phone, @Size(min = 11, max = 11, message = "PESEL is 11 digits long!") @NotNull String pesel,
-                  @Past LocalDate birthday, @NotBlank boolean sex, @Min(2500) double salary, boolean isHead) {
-        super(name, lastName, email, phone, pesel, birthday, sex);
+                  @Past LocalDate birthday, Gender gender, @Min(2500) double salary) {
+        super(name, lastName, email, phone, pesel, birthday, gender);
         this.salary = salary;
-        this.isHead = isHead;
     }
+
 }
