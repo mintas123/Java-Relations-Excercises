@@ -1,1 +1,47 @@
-<p>patient-search works!</p>
+<h1 class="text-center m-5 p-5 app-header ">Find patient</h1>
+
+
+<div class="row">
+  <div class="col-md-auto offset-md-3">
+    <form class="patient-form">
+      <label for="search"><i class="material-icons search-icon ">search</i></label>
+      <mat-form-field class="patient-form-field" style="width:400px !important">
+        <input type="text" matInput
+               #input id="search"
+               placeholder="Patient name or PESEL..."
+               [matAutocomplete]="auto"
+               [formControl]="myControl">
+
+        <mat-autocomplete autoActiveFirstOption
+                          #auto="matAutocomplete"
+                          (optionSelected)='selectPatient($event.option.value)'
+                          [displayWith]="displayFn">
+          <mat-option *ngFor="let option of filteredOptions | async"
+                      [value]="option"
+                      (click)="initFilter()">
+          <span>{{option.name}} |
+            <strong class="text-muted">{{option.pesel}}</strong> </span> |
+            <small class="text-muted">{{option.birthday | date}}</small>
+        </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <button class="btn btn-dark mx-1">New </button>
+    </form>
+  </div>
+</div>
+<!--<div class="row">-->
+<!--  <p>Current patient: {{selectedPatient? selectedPatient.name: '-'}} | {{selectedPatient? selectedPatient.pesel: '-'}}</p>-->
+<!--</div>-->
+
+<div class="col-md-auto offset-md-3 pt-3 mt-3">
+  <app-patient-detail [patient]="selectedPatient" *ngIf="selectedPatient"></app-patient-detail>
+
+</div>
+
+<!--<router-outlet></router-outlet>-->
+
+<div class="container col-md-2 offset-md-7">
+  <button class="btn btn-primary my-2" *ngIf="selectedPatient">Next</button>
+</div>
+
