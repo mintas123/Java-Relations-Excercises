@@ -1,0 +1,33 @@
+<h1 class="text-center m-5 p-5">Find patient</h1>
+
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-md-offset-5">
+            <form class="form-inline">
+                <div class="form-group mb-2">
+                    <input type="password" class="form-control" id="inputPassword2" placeholder="PESEL...">
+                </div>
+                <button type="submit" class="btn btn-dark mb-2">Search</button>
+
+                <button class="btn btn-light mb-2">New </button>
+            </form>
+
+        </div>
+    </div>
+</div>
