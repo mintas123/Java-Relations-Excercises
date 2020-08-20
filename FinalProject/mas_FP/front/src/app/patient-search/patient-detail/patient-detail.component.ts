@@ -38,4 +38,8 @@ export class PatientDetailComponent implements OnInit {
     this.router.navigate(['referrals'], {relativeTo: this.route});
   }
 
+  onNext() {
+    this.router.navigate(['/', this.id, 'visit'], {relativeTo: this.route});
+  }
+
 }

@@ -1,4 +1,4 @@
-export class Patient {
+export class Doctor {
   constructor(public name: string,
               public lName: string,
               public pesel: number,
@@ -6,9 +6,8 @@ export class Patient {
               public email: string,
               public phone: string,
               public birthday: Date,
-              public since: Date,
-              public isVIP: boolean,
-              public insurance: string
+              public salary: number,
+              public isHead: boolean,
   ) {
   }
 }

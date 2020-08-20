@@ -16,11 +16,11 @@
                           #auto="matAutocomplete"
                           (optionSelected)='selectPatient($event.option.value)'
                           [displayWith]="displayFn">
-          <mat-option *ngFor="let option of filteredOptions | async; let id = index"
+          <mat-option *ngFor="let option of filteredOptions | async"
                       [value]="option"
-                      [routerLink]="id"
-                      (click)="initFilter()">
-          <span>{{option.name}} |
+                      [routerLink]="getPatientId(option)"
+                      (click)="onPatientClick()">
+          <span>{{option.name}} {{option.lName}} |
             <strong class="text-muted">{{option.pesel}}</strong> </span> |
             <small class="text-muted">{{option.birthday | date}}</small>
         </mat-option>
@@ -36,8 +36,4 @@
   <router-outlet></router-outlet>
 </div>
 
-
-<div class="container col-md-2 offset-md-7">
-  <button class="btn btn-primary my-2" *ngIf="selectedPatient" (click)="onNext()">Next</button>
-</div>
 

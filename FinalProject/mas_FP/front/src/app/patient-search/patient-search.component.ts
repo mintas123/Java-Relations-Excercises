@@ -36,31 +36,41 @@ export class PatientSearchComponent implements OnInit {
   onNewPatient() {
     this.router.navigate(['/new'], {relativeTo: this.route});
   }
-  onNext() {
-    const index = this.options.indexOf(this.selectedPatient);
-    this.router.navigate(['/', index, 'visit'], {relativeTo: this.route});
-  }
 
 
-
-  initFilter(){
+  initFilter() {
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );
   }
-  selectPatient(value){
+
+  onPatientClick() {
+    this.initFilter();
+    this.selectedPatient = null;
+
+  }
+
+  selectPatient(value) {
     this.selectedPatient = value;
+  }
+  getPatientId(patient){
+    return this.patientService.getPatientId(patient);
   }
 
   displayFn(subject) {
-    return subject ? subject.name : undefined;
+    return subject ? subject.name + ' ' + subject.lName : undefined;
   }
 
   private _filter(value: string): Patient[] {
     const filterValue = value.toLowerCase();
-    if (value.length < 3) { return null; }
+    if (value.length < 3) {
+      return null;
+    }
 
     return this.options.filter(
-      option => option.name.toLowerCase().includes(filterValue) || option.pesel.toString().indexOf(filterValue) === 0); }
+      option => option.name.toLowerCase().includes(filterValue) ||
+        option.lName.toLowerCase().includes(filterValue) ||
+        option.pesel.toString().indexOf(filterValue) === 0);
+  }
 }
