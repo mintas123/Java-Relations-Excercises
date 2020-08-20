@@ -1,28 +1,28 @@
 <div class="container">
   <div class="row  my-md-1">
     <div class="col-md-5">
-      <h3><strong>Name:</strong> {{patient.name}}</h3>
+      <h3><strong>Name:</strong> {{selectedPatient.name}}</h3>
     </div>
     <div class="col-md-7">
-      <h3><strong>PESEL:</strong> {{patient.pesel}}</h3>
+      <h3><strong>PESEL:</strong> {{selectedPatient.pesel}}</h3>
     </div>
   </div>
 
   <div class="row  my-md-1">
     <div class="col-sm-5">
-      <h3><strong>Birth:</strong> {{patient.birthday | date}}</h3>
+      <h3><strong>Birth:</strong> {{selectedPatient.birthday | date}}</h3>
     </div>
     <div class="col-sm-7">
-      <h3><strong>Sex:</strong> {{patient.sex ? 'Male' : 'Female'}}</h3>
+      <h3><strong>Sex:</strong> {{selectedPatient.sex ? 'Male' : 'Female'}}</h3>
     </div>
   </div>
 
   <div class="row  my-md-1">
     <div class="col-sm-5">
-      <h3><strong>Email:</strong> {{patient.email}}</h3>
+      <h3><strong>Email:</strong> {{selectedPatient.email}}</h3>
     </div>
     <div class="col-sm-7">
-      <h3><strong>Phone:</strong> {{patient.phone}}</h3>
+      <h3><strong>Phone:</strong> {{selectedPatient.phone}}</h3>
     </div>
   </div>
 
@@ -30,16 +30,19 @@
   <div class="row">
     <div class="col-sm-auto">
       <button class="btn"
+              (click)="onEditPatient()"
               style="background-color:transparent">
         <i class="material-icons shortcut">create</i>
        <span>Edit</span>
       </button>
       <button class="btn"
+              (click)="onHistory()"
               style="background-color:transparent">
         <i class="material-icons shortcut " >history</i>
         <span>History</span>
       </button>
       <button class="btn"
+              (click)="onReferral()"
               style="background-color:transparent">
         <i class="material-icons mat-icon-no-color shortcut ">info</i>
         <span>Referrals</span>

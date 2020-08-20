@@ -3,6 +3,8 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {Patient} from '../model/patient';
+import {PatientService} from '../services/patient.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-patient-search',
@@ -13,43 +15,33 @@ export class PatientSearchComponent implements OnInit {
 
   selectedPatient: Patient;
   myControl = new FormControl();
-  options: Patient[] = [
-    new Patient('Jakub Mróz', 99042608556,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-    new Patient('Jakub Mróż', 99042608123,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-    new Patient('Juba Mruz', 99042234656,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-    new Patient('AAAA Mróz', 99042608556,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-    new Patient('AAac Mróż', 99042608123,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-    new Patient('Acc Mruz', 99042234656,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-    new Patient('Aeee Mróz', 99042608556,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-    new Patient('AWE Mróż', 99042608123,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-    new Patient('EEE Mruz', 99042234656,
-      true, 'kumroz@gmail.com', '787312931',
-      new Date(1999, 3, 26)),
-  ];
+  options = this.patientService.getPatients();
   filteredOptions: Observable<Patient[]>;
 
-  constructor() {
+  constructor(private patientService: PatientService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.initFilter();
+
+    this.patientService.patientSelected.subscribe(
+      (patient: Patient) => {
+        this.selectedPatient = patient;
+      }
+    );
   }
+
+  onNewPatient() {
+    this.router.navigate(['/new'], {relativeTo: this.route});
+  }
+  onNext() {
+    const index = this.options.indexOf(this.selectedPatient);
+    this.router.navigate(['/', index, 'visit'], {relativeTo: this.route});
+  }
+
+
 
   initFilter(){
     this.filteredOptions = this.myControl.valueChanges.pipe(

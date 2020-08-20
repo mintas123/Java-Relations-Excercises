@@ -16,8 +16,9 @@
                           #auto="matAutocomplete"
                           (optionSelected)='selectPatient($event.option.value)'
                           [displayWith]="displayFn">
-          <mat-option *ngFor="let option of filteredOptions | async"
+          <mat-option *ngFor="let option of filteredOptions | async; let id = index"
                       [value]="option"
+                      [routerLink]="id"
                       (click)="initFilter()">
           <span>{{option.name}} |
             <strong class="text-muted">{{option.pesel}}</strong> </span> |
@@ -26,22 +27,17 @@
         </mat-autocomplete>
       </mat-form-field>
 
-      <button class="btn btn-dark mx-1">New </button>
+      <button (click)="onNewPatient()" class="btn btn-dark mx-1">New </button>
     </form>
   </div>
 </div>
-<!--<div class="row">-->
-<!--  <p>Current patient: {{selectedPatient? selectedPatient.name: '-'}} | {{selectedPatient? selectedPatient.pesel: '-'}}</p>-->
-<!--</div>-->
 
 <div class="col-md-auto offset-md-3 pt-3 mt-3">
-  <app-patient-detail [patient]="selectedPatient" *ngIf="selectedPatient"></app-patient-detail>
-
+  <router-outlet></router-outlet>
 </div>
 
-<!--<router-outlet></router-outlet>-->
 
 <div class="container col-md-2 offset-md-7">
-  <button class="btn btn-primary my-2" *ngIf="selectedPatient">Next</button>
+  <button class="btn btn-primary my-2" *ngIf="selectedPatient" (click)="onNext()">Next</button>
 </div>
 
