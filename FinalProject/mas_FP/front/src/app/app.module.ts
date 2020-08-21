@@ -86,6 +86,9 @@ import {AppRoutingModule} from './app-routing.module';
     MatAutocompleteModule,
     MatCheckboxModule,
     RouterModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatNativeDateModule
 
 
   ],

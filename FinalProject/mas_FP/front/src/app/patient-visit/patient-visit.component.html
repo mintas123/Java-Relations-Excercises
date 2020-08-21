@@ -1,1 +1,102 @@
-<p>patient-visit works!</p>
+<h1 class="text-center m-5 p-5 app-header ">Find visit</h1>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-auto offset-md-3">
+      <form class="patient-form">
+        <label for="search"><i class="material-icons search-icon ">search</i></label>
+        <mat-form-field class="patient-form-field" style="width:400px !important">
+          <input type="text" matInput
+                 #input id="search"
+                 placeholder="Doctor or Division..."
+                 [matAutocomplete]="auto"
+                 [formControl]="fControl">
+
+          <mat-autocomplete autoActiveFirstOption
+                            #auto="matAutocomplete"
+                            (optionSelected)='selectDoctor($event.option.value)'
+                            [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async"
+                        [value]="option"
+                        (click)="onDoctorClick()">
+              <span>{{option.name}} {{option.lName}} </span> |
+              <small class="text-muted">{{option.division.name}}</small>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-auto offset-md-3">
+      <mat-form-field appearance="fill">
+        <mat-label>Start date</mat-label>
+        <input [min]="minDateStart" [max]="maxDateStart"
+               [(ngModel)]="startDate" matInput
+               [matDatepicker]="pickerStart">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>End date</mat-label>
+        <input  [min]="minDateStart" [max]="maxDateEnd"
+                [(ngModel)]="endDate" matInput
+                [matDatepicker]="pickerEnd">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-auto offset-md-3">
+
+      <h3>Has a referral:
+        <mat-checkbox class="big-checkbox"
+                      [checked]="true">
+        </mat-checkbox>
+      </h3>
+
+    </div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-auto offset-md-3">
+      <p  *ngIf="selectedPatient">Patient: {{selectedPatient.name}} {{selectedPatient.lName}}, {{selectedPatient.pesel}}
+      </p>
+      <p  *ngIf="selectedDoctor">Doctor: {{selectedDoctor.name}} {{selectedDoctor.lName}}, {{selectedDoctor.division.name}}
+      </p>
+      <p  *ngIf="startDate && endDate">From: {{startDate | date}} To:  {{endDate | date}}
+      </p>
+
+
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-auto offset-md-3">
+
+      <h2>Free spots: </h2>
+
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-auto offset-md-7">
+      <button (click)="onBackClick()" class="btn btn-dark mx-1">Back</button>
+      <button (click)="onBookClick()" class="btn btn-primary mx-1">Book</button>
+    </div>
+  </div>
+
+
+
+
+</div>
+

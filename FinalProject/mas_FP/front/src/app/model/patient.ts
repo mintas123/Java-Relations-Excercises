@@ -1,4 +1,11 @@
+import {Visit} from './visit';
+import {Referral} from './referral';
+
 export class Patient {
+
+  public appointments: Visit[];
+  public referrals: Referral[];
+
   constructor(public name: string,
               public lName: string,
               public pesel: number,

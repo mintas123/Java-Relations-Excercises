@@ -65,7 +65,7 @@ export class PatientSearchComponent implements OnInit {
   private _filter(value: string): Patient[] {
     const filterValue = value.toLowerCase();
     if (value.length < 3) {
-      return null;
+      return [];
     }
 
     return this.options.filter(
