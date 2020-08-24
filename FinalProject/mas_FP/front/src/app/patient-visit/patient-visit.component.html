@@ -35,16 +35,18 @@
         <mat-label>Start date</mat-label>
         <input [min]="minDateStart" [max]="maxDateStart"
                [(ngModel)]="startDate" matInput
-               [matDatepicker]="pickerStart">
+               [matDatepicker]="pickerStart"
+               (click)="findVisits()">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>End date</mat-label>
-        <input  [min]="minDateStart" [max]="maxDateEnd"
-                [(ngModel)]="endDate" matInput
-                [matDatepicker]="pickerEnd">
+        <input [min]="minDateStart" [max]="maxDateEnd"
+               [(ngModel)]="endDate" matInput
+               [matDatepicker]="pickerEnd"
+               (click)="findVisits()">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
       </mat-form-field>
@@ -67,11 +69,12 @@
 
   <div class="row">
     <div class="col-md-auto offset-md-3">
-      <p  *ngIf="selectedPatient">Patient: {{selectedPatient.name}} {{selectedPatient.lName}}, {{selectedPatient.pesel}}
+      <p *ngIf="selectedPatient">Patient: {{selectedPatient.name}} {{selectedPatient.lName}}, {{selectedPatient.pesel}}
       </p>
-      <p  *ngIf="selectedDoctor">Doctor: {{selectedDoctor.name}} {{selectedDoctor.lName}}, {{selectedDoctor.division.name}}
+      <p *ngIf="selectedDoctor">Doctor: {{selectedDoctor.name}} {{selectedDoctor.lName}}
+        , {{selectedDoctor.division.name}}
       </p>
-      <p  *ngIf="startDate && endDate">From: {{startDate | date}} To:  {{endDate | date}}
+      <p *ngIf="startDate && endDate">From: {{startDate | date}} To:  {{endDate | date}}
       </p>
 
 
@@ -79,10 +82,16 @@
   </div>
 
 
-  <div class="row">
+  <div class="row" *ngIf="dates">
     <div class="col-md-auto offset-md-3">
 
       <h2>Free spots: </h2>
+      <mat-selection-list #date>
+        <mat-list-option *ngFor="let date of dates">
+          {{date}}
+        </mat-list-option>
+      </mat-selection-list>
+
 
 
     </div>
@@ -94,8 +103,6 @@
       <button (click)="onBookClick()" class="btn btn-primary mx-1">Book</button>
     </div>
   </div>
-
-
 
 
 </div>

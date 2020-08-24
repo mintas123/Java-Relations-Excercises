@@ -5,6 +5,8 @@ import {map, startWith} from 'rxjs/operators';
 import {Patient} from '../model/patient';
 import {PatientService} from '../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {VisitService} from '../services/visit.service';
+import {Visit} from '../model/visit';
 
 @Component({
   selector: 'app-patient-search',
@@ -13,12 +15,17 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class PatientSearchComponent implements OnInit {
 
+// todo temp
+  history: Visit[];
+  dates: Date[] = [];
+
   selectedPatient: Patient;
   myControl = new FormControl();
   options = this.patientService.getPatients();
   filteredOptions: Observable<Patient[]>;
 
   constructor(private patientService: PatientService,
+              private visitService: VisitService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -52,10 +59,21 @@ export class PatientSearchComponent implements OnInit {
   }
 
   selectPatient(value) {
-    this.selectedPatient = value;
+    this.patientService.patientSelected.emit(value);
+    this.getPatientVisits();
   }
   getPatientId(patient){
     return this.patientService.getPatientId(patient);
+  }
+  // todo temp
+  getPatientVisits() {
+    this.history = this.visitService.findVisitsByPatient(this.selectedPatient);
+
+    this.history.forEach(
+      (visit: Visit) => {
+        this.dates.push(visit.date);
+      }
+    );
   }
 
   displayFn(subject) {

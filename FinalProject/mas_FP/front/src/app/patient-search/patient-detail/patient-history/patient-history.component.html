@@ -1,1 +1,26 @@
-<p>patient-history works!</p>
+
+<div class="row">
+  <h2>Past visit:</h2>
+</div>
+
+
+
+
+<div class="row" *ngIf="history && history.length > 0">
+    <mat-list #date>
+      <mat-list-item *ngFor="let visit of history">
+        {{visit.date | date:'medium'}} - {{getVisitDoctorInfo(visit).name + ' '+ getVisitDoctorInfo(visit).lName}},
+        <strong class="text-muted"> {{getVisitDoctorInfo(visit).division.name}}</strong>
+      </mat-list-item>
+    </mat-list>
+</div>
+
+<div class="row"  *ngIf="!history || history.length == 0">
+  <p>No visits</p>
+</div>
+
+<div class="row">
+  <div class="col-md-auto">
+    <button (click)="onBackClick()" class="btn btn-dark">Back</button>
+  </div>
+</div>

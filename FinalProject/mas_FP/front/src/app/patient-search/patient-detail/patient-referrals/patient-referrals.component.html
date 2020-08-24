@@ -1,1 +1,27 @@
-<p>patient-referrals works!</p>
+
+<div class="row">
+  <h2>Referrals:</h2>
+</div>
+
+
+
+
+<div class="row" *ngIf="referrals && referrals.length > 0">
+  <mat-list #date>
+    <mat-list-item *ngFor="let referral of referrals">
+      {{referral.dateFrom | date}} - {{referral.dateTo | date}}
+      ,
+      <strong class="text-muted"> {{getReferralDoctorInfo(referral).name + ' ' + getReferralDoctorInfo(referral).lName}}</strong>
+    </mat-list-item>
+  </mat-list>
+</div>
+
+<div class="row"  *ngIf="!referrals || referrals.length == 0">
+  <p>No visits</p>
+</div>
+
+<div class="row">
+  <div class="col-md-auto">
+    <button (click)="onBackClick()" class="btn btn-dark">Back</button>
+  </div>
+</div>

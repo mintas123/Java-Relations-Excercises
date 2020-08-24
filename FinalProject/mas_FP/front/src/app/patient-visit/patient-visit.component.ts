@@ -8,6 +8,8 @@ import {Doctor} from '../model/doctor';
 import {Patient} from '../model/patient';
 import {PatientService} from '../services/patient.service';
 import {Location} from '@angular/common';
+import {Visit} from '../model/visit';
+import {VisitService} from '../services/visit.service';
 
 
 @Component({
@@ -30,12 +32,16 @@ export class PatientVisitComponent implements OnInit {
   selectedDoctor: Doctor;
   selectedPatient: Patient;
 
+  dates: Date[] = [];
+  selectedVisit: Visit;
+
   fControl = new FormControl();
   options = this.doctorService.getDoctors();
   filteredOptions: Observable<Doctor[]>;
 
   constructor(private doctorService: DoctorService,
               private patientService: PatientService,
+              private visitService: VisitService,
               private route: ActivatedRoute,
               private location: Location) {
   }
@@ -68,11 +74,19 @@ export class PatientVisitComponent implements OnInit {
   }
 
   selectDoctor(value) {
-    this.selectedDoctor = value;
+    this.doctorService.doctorSelected.emit(value);
+    // this.selectedDoctor = value;
   }
 
   getDoctorId(doc) {
     return this.doctorService.getDoctorId(doc);
+  }
+
+  findVisits(){
+    console.log('find visit started');
+    if (this.startDate && this.endDate && this.selectedDoctor && this.selectedPatient) {
+      this.dates = this.visitService.getDatesBetween(this.startDate, this.endDate);
+    }
   }
 
   displayFn(subject) {
