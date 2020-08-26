@@ -15,12 +15,6 @@ export class PatientNewComponent implements OnInit {
   id: number;
   patientForm: FormGroup;
 
-  options = [
-    { name: 'Female', value: false },
-    { name: 'Male', value: true }
-  ];
-  selectedOption: string;
-
   constructor(private location: Location,
               private route: ActivatedRoute,
               private router: Router,
@@ -55,6 +49,7 @@ export class PatientNewComponent implements OnInit {
     });
   }
   onSubmit() {
+    console.log(this.patientForm.value.sex);
     const  newPatient = new Patient(
       this.patientForm.value.name,
       this.patientForm.value.lName,

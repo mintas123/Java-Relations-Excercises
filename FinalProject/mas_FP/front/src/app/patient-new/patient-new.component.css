@@ -2,7 +2,22 @@
   font-size: 42px;
 }
 input.ng-invalid.ng-touched,
-textarea.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched{
+mat-radio-button.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched{
   border: 1px solid red;
+}
+
+.big-checkbox {
+  font-size: 32px;
+  vertical-align: middle;
+}
+.big-checkbox-label {
+  vertical-align: middle;
+  margin-left: 4px;
+  margin-right: 16px;
+
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+  margin-top: 32px;
 }
