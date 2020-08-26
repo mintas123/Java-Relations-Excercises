@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {Patient} from '../model/patient';
 import {PatientService} from '../services/patient.service';
@@ -13,7 +13,7 @@ import {Visit} from '../model/visit';
   templateUrl: './patient-search.component.html',
   styleUrls: ['./patient-search.component.css']
 })
-export class PatientSearchComponent implements OnInit {
+export class PatientSearchComponent implements OnInit, OnDestroy {
 
 // todo temp
   history: Visit[];
@@ -21,8 +21,10 @@ export class PatientSearchComponent implements OnInit {
 
   selectedPatient: Patient;
   myControl = new FormControl();
-  options = this.patientService.getPatients();
+  options: Patient[];
   filteredOptions: Observable<Patient[]>;
+
+  subscription: Subscription;
 
   constructor(private patientService: PatientService,
               private visitService: VisitService,
@@ -38,6 +40,16 @@ export class PatientSearchComponent implements OnInit {
         this.selectedPatient = patient;
       }
     );
+
+    this.subscription = this.patientService.patientsChanged.subscribe(
+      (patients: Patient[]) => {
+        this.options = patients;
+      }
+    );
+    this.options = this.patientService.getPatients();
+
+    console.log(this.options);
+
   }
 
   onNewPatient() {
@@ -60,21 +72,23 @@ export class PatientSearchComponent implements OnInit {
 
   selectPatient(value) {
     this.patientService.patientSelected.emit(value);
-    this.getPatientVisits();
+    // this.getPatientVisits();
   }
-  getPatientId(patient){
+
+  getPatientId(patient) {
     return this.patientService.getPatientId(patient);
   }
-  // todo temp
-  getPatientVisits() {
-    this.history = this.visitService.findVisitsByPatient(this.selectedPatient);
 
-    this.history.forEach(
-      (visit: Visit) => {
-        this.dates.push(visit.date);
-      }
-    );
-  }
+  // todo temp
+  // getPatientVisits() {
+  //   this.history = this.visitService.findVisitsByPatient(this.selectedPatient);
+  //
+  //   this.history.forEach(
+  //     (visit: Visit) => {
+  //       this.dates.push(visit.date);
+  //     }
+  //   );
+  // }
 
   displayFn(subject) {
     return subject ? subject.name + ' ' + subject.lName : undefined;
@@ -90,5 +104,9 @@ export class PatientSearchComponent implements OnInit {
       option => option.name.toLowerCase().includes(filterValue) ||
         option.lName.toLowerCase().includes(filterValue) ||
         option.pesel.toString().indexOf(filterValue) === 0);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

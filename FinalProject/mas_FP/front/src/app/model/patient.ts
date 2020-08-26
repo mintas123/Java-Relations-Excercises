@@ -8,8 +8,8 @@ export class Patient {
 
   constructor(public name: string,
               public lName: string,
-              public pesel: number,
-              public sex: boolean,
+              public pesel: string,
+              public sex: boolean, //
               public email: string,
               public phone: string,
               public birthday: Date,
