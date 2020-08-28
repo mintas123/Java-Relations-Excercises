@@ -2,46 +2,50 @@ import {Injectable} from '@angular/core';
 import {PatientService} from './patient.service';
 import {Visit} from '../model/visit';
 import {Patient} from '../model/patient';
+import {HttpClient} from '@angular/common/http';
+import {Subject} from 'rxjs';
+
+const API_URL = 'http://localhost:8080/api/';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class VisitService {
 
-  constructor(private patientService: PatientService) {
-    // this.initData();
+  constructor(private http: HttpClient,
+              private patientService: PatientService) {
   }
 
   visits: Visit[] = [
-    new Visit(0, 0, new Date(2020, 7, 26, 14, 15)),
-    new Visit(1, 3, new Date(2020, 7, 24, 13, 30)),
-    new Visit(1, 4, new Date(2020, 7, 24, 13, 45)),
+    // new Visit(0, 0, new Date(2020, 7, 26, 14, 15)),
+    // new Visit(1, 3, new Date(2020, 7, 24, 13, 30)),
+    // new Visit(1, 4, new Date(2020, 7, 24, 13, 45)),
 
   ];
+  visitChanged = new Subject<Visit[]>();
 
-  findVisitsByPatient(patient: Patient): Visit[] {
-    const visitCopy = this.visits.slice();
-    const patientId = this.patientService.getPatientId(patient);
-    return visitCopy.filter((visit: Visit) => visit.patient === patientId);
+
+  fetchVisits(patientId: number) {
+    this.http.get<Visit[]>(API_URL + 'patient/history/' + patientId).subscribe(
+      (response: Visit[]) => {
+        this.visits = response;
+        this.visitChanged.next(response);
+
+      });
   }
 
-  // initData() {
-  //   let visit1 = new Visit()
+  getVisits(): Visit[] {
+    return this.visits.slice();
+  }
+
+  // findVisitsByPatient(patient: Patient): Visit[] {
+  //   const visitCopy = this.visits.slice();
+  //   // const patientId = this.patientService.getPatientId(patient);
+  //   return visitCopy.filter((visit: Visit) => visit.patient === patient.personId);
   // }
 
-  // private createDatesBetween(from: Date, to: Date) {
-  //   let dateArray: Date[];
-  //
-  //   let day;
-  //   for ( day = from; day < to; day++) {
-  //     let time;
-  //     for (time = day.) {
-  //
-  //     }
-  //
-  //   }
-  // }
-  getDatesBetween(from: Date, to: Date) {
+  getDatesBetween(from: Date, to: Date) { // not working
     let dates: Date[] = [];
     console.log(from);
     console.log(to);

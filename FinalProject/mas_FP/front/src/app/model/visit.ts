@@ -1,6 +1,7 @@
 export class Visit {
-  constructor(public doctor: number,
-              public patient: number,
-              public date: Date ) {
+  constructor(public doctorName: string,
+              public doctorLastName: string,
+              public divisionName: string,
+              public visitDate: Date ) {
   }
 }

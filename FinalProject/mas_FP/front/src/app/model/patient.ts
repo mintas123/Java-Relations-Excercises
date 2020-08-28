@@ -6,16 +6,18 @@ export class Patient {
   public appointments: Visit[];
   public referrals: Referral[];
 
-  constructor(public name: string,
-              public lName: string,
-              public pesel: string,
-              public sex: boolean, //
-              public email: string,
-              public phone: string,
-              public birthday: Date,
-              public since: Date,
-              public isVIP: boolean,
-              public insurance: string
+  constructor(
+    public personId: number,
+    public name: string,
+    public lastName: string,
+    public pesel: string,
+    public gender: string,
+    public email: string,
+    public phone: string,
+    public birthday: Date,
+    public clientSince: Date,
+    public vip: boolean,
+    public insuranceProvider: string,
   ) {
   }
 }

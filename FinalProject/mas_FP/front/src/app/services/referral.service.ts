@@ -28,7 +28,7 @@ export class ReferralService {
 
   findReferralByPatient(patient: Patient): Referral[] {
     const referralCopy = this.referrals.slice();
-    const patientId = this.patientService.getPatientId(patient);
-    return referralCopy.filter((referral: Referral) => referral.patient === patientId);
+    // const patientId = this.patientService.getPatientId(patient);
+    return referralCopy.filter((referral: Referral) => referral.patient === patient.personId);
   }
 }

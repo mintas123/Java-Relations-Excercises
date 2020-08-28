@@ -60,6 +60,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import {RouterModule} from '@angular/router';
 import { PatientDetailComponent } from './patient-search/patient-detail/patient-detail.component';
 import {AppRoutingModule} from './app-routing.module';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import {AppRoutingModule} from './app-routing.module';
     PatientDetailComponent
   ],
   imports: [
+    HttpClientModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,

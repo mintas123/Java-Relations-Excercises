@@ -10,6 +10,7 @@ import {PatientService} from '../services/patient.service';
   templateUrl: './patient-new.component.html',
   styleUrls: ['./patient-new.component.css']
 })
+
 export class PatientNewComponent implements OnInit {
 
   id: number;
@@ -44,17 +45,17 @@ export class PatientNewComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       phone: new FormControl(null, Validators.required),
       birthday: new FormControl(null, [Validators.required]),
-      isVIP: new FormControl(null),
+      isVIP: new FormControl(false),
       insurance: new FormControl(null, Validators.required),
     });
   }
   onSubmit() {
-    console.log(this.patientForm.value.sex);
     const  newPatient = new Patient(
+      null,
       this.patientForm.value.name,
       this.patientForm.value.lName,
       this.patientForm.value.pesel,
-      this.patientForm.value.sex === 'Male',
+      this.patientForm.value.sex,
       this.patientForm.value.email,
       this.patientForm.value.phone,
       new Date(Date.parse(this.patientForm.value.birthday)),
@@ -65,10 +66,6 @@ export class PatientNewComponent implements OnInit {
     this.patientService.addPatient(newPatient);
 
     this.onReturn();
-  }
-
-  onBackClick() {
-    this.location.back();
   }
 
   onReturn() {

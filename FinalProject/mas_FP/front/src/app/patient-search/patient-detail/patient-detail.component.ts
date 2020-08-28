@@ -20,6 +20,7 @@ export class PatientDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.patientService.fetchPatients();
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params.id;

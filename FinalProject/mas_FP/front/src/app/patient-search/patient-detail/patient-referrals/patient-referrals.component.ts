@@ -33,7 +33,7 @@ export class PatientReferralsComponent implements OnInit {
   }
 
   getVisitDoctorInfo(visit: Visit): Doctor {
-    return this.doctorService.getDoctor(visit.doctor);
+    return this.doctorService.getDoctor(1); // todo broken
   }
 
   getReferralDoctorInfo(referral: Referral): Doctor {

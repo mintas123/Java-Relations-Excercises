@@ -9,8 +9,8 @@
 <div class="row" *ngIf="history && history.length > 0">
     <mat-list #date>
       <mat-list-item *ngFor="let visit of history">
-        {{visit.date | date:'medium'}} - {{getVisitDoctorInfo(visit).name + ' '+ getVisitDoctorInfo(visit).lName}},
-        <strong class="text-muted"> {{getVisitDoctorInfo(visit).division.name}}</strong>
+        {{visit.visitDate | date:'medium'}} - {{visit.doctorName + ' '+ visit.doctorLastName}},
+        <strong class="text-muted"> {{visit.divisionName}}</strong>
       </mat-list-item>
     </mat-list>
 </div>

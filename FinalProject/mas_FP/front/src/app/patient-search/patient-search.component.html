@@ -18,9 +18,9 @@
                           [displayWith]="displayFn">
           <mat-option *ngFor="let option of filteredOptions | async"
                       [value]="option"
-                      [routerLink]="getPatientId(option)"
+                      [routerLink]="option.personId"
                       (click)="onPatientClick()">
-          <span>{{option.name}} {{option.lName}} |
+          <span>{{option.name}} {{option.lastName}} |
             <strong class="text-muted">{{option.pesel}}</strong> </span> |
             <small class="text-muted">{{option.birthday | date}}</small>
         </mat-option>

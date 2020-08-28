@@ -7,6 +7,7 @@ import {PatientService} from '../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {VisitService} from '../services/visit.service';
 import {Visit} from '../model/visit';
+import {logger} from 'codelyzer/util/logger';
 
 @Component({
   selector: 'app-patient-search',
@@ -16,8 +17,8 @@ import {Visit} from '../model/visit';
 export class PatientSearchComponent implements OnInit, OnDestroy {
 
 // todo temp
-  history: Visit[];
-  dates: Date[] = [];
+//   history: Visit[];
+//   dates: Date[] = [];
 
   selectedPatient: Patient;
   myControl = new FormControl();
@@ -35,12 +36,7 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initFilter();
 
-    this.patientService.patientSelected.subscribe(
-      (patient: Patient) => {
-        this.selectedPatient = patient;
-      }
-    );
-
+    this.patientService.fetchPatients();
     this.subscription = this.patientService.patientsChanged.subscribe(
       (patients: Patient[]) => {
         this.options = patients;
@@ -48,8 +44,11 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
     );
     this.options = this.patientService.getPatients();
 
-    console.log(this.options);
-
+    this.patientService.patientSelected.subscribe(
+      (patient: Patient) => {
+        this.selectedPatient = patient;
+      }
+    );
   }
 
   onNewPatient() {
@@ -70,13 +69,15 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
 
   }
 
-  selectPatient(value) {
+  selectPatient(value: Patient) {
     this.patientService.patientSelected.emit(value);
-    // this.getPatientVisits();
+    console.log(value);
+    this.router.navigate([value.personId], {relativeTo: this.route});
+
   }
 
   getPatientId(patient) {
-    return this.patientService.getPatientId(patient);
+    return patient.id;
   }
 
   // todo temp
@@ -91,7 +92,7 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
   // }
 
   displayFn(subject) {
-    return subject ? subject.name + ' ' + subject.lName : undefined;
+    return subject ? subject.name + ' ' + subject.lastName : undefined;
   }
 
   private _filter(value: string): Patient[] {
@@ -102,8 +103,8 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
 
     return this.options.filter(
       option => option.name.toLowerCase().includes(filterValue) ||
-        option.lName.toLowerCase().includes(filterValue) ||
-        option.pesel.toString().indexOf(filterValue) === 0);
+        option.lastName.toLowerCase().includes(filterValue) ||
+        option.pesel.indexOf(filterValue) === 0);
   }
 
   ngOnDestroy(): void {
