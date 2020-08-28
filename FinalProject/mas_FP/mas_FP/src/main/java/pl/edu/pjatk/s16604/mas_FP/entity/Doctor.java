@@ -1,5 +1,6 @@
-package pl.edu.pjatk.s16604.mas_FP.model;
+package pl.edu.pjatk.s16604.mas_FP.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,14 +41,16 @@ public class Doctor extends Person {
 
     private boolean isHead;
 
+    @JsonIgnore
     @OneToMany(
             fetch = FetchType.EAGER,
             mappedBy = "doctor")
     private Set<Appointment> visits;
 
+    @JsonIgnore
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "doctor")
+            mappedBy="doctor")
     private Set<Referral> referrals;
 
     public void addVisit(Appointment appointment) {

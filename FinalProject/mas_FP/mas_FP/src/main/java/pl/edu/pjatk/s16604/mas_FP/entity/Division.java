@@ -1,4 +1,4 @@
-package pl.edu.pjatk.s16604.mas_FP.model;
+package pl.edu.pjatk.s16604.mas_FP.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class Division {
     @NotBlank
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "head_id")
     private Doctor head;
     @NotBlank

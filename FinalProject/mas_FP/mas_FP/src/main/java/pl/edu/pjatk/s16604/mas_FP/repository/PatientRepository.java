@@ -1,6 +1,6 @@
 package pl.edu.pjatk.s16604.mas_FP.repository;
 
-import pl.edu.pjatk.s16604.mas_FP.model.Patient;
+import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,6 +14,8 @@ public interface PatientRepository extends PersonBaseRepository<Patient> {
 
     @Override
     List<Patient> findAll();
+
+    List<Patient> getAllByNameContainsOrLastNameContainsOrPeselContains(String name, String lastName, String pesel);
 
 
 }

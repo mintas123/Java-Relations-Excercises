@@ -3,10 +3,12 @@ package pl.edu.pjatk.s16604.mas_FP.service;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.pjatk.s16604.mas_FP.model.Appointment;
-import pl.edu.pjatk.s16604.mas_FP.model.Patient;
-import pl.edu.pjatk.s16604.mas_FP.model.Person;
-import pl.edu.pjatk.s16604.mas_FP.model.Referral;
+import pl.edu.pjatk.s16604.mas_FP.DTO.PatientDTO;
+import pl.edu.pjatk.s16604.mas_FP.DTO.VisitDTO;
+import pl.edu.pjatk.s16604.mas_FP.entity.Appointment;
+import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
+import pl.edu.pjatk.s16604.mas_FP.entity.Person;
+import pl.edu.pjatk.s16604.mas_FP.entity.Referral;
 import pl.edu.pjatk.s16604.mas_FP.repository.AppointmentRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.PatientRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.PersonRepository;
@@ -34,6 +36,53 @@ public class PatientService {
         return patientRepository.getAllByPeselStartingWith(pesel);
     }
 
+    public List<Patient> searchPatientByString(String string) {
+        return patientRepository.getAllByNameContainsOrLastNameContainsOrPeselContains(string, string, string);
+    }
+
+    public Patient searchPatientById(long patientId) {
+        Optional<Patient> optionalPatient = patientRepository.getByPersonId(patientId);
+        if (optionalPatient.isPresent()) {
+            return optionalPatient.get();
+        } else {
+            throw new RuntimeException("No such patient");
+        }
+    }
+
+    public void updatePatient(long id, PatientDTO dto) {
+        Patient patient = patientRepository.getByPersonId(id).get();
+        patient.setName(dto.getName());
+        patient.setLastName(dto.getLastName());
+        patient.setPesel(dto.getPesel());
+        patient.setEmail(dto.getEmail());
+        patient.setPhone(dto.getPhone());
+        patient.setBirthday(dto.getBirthday());
+        patient.setGender(dto.getGender());
+        patient.setClientSince(dto.getClientSince());
+        patient.setInsuranceProvider(dto.getInsuranceProvider());
+        patient.setVIP(dto.isVIP());
+
+
+        patientRepository.save(patient);
+
+    }
+
+    public void addPatient(PatientDTO patient) {
+        Patient newPatient = new Patient(patient.getName(),
+                patient.getLastName(),
+                patient.getEmail(),
+                patient.getPhone(),
+                patient.getPesel(),
+                patient.getBirthday(),
+                patient.getGender(),
+                patient.getClientSince(),
+                patient.getInsuranceProvider(),
+                patient.isVIP()
+        );
+        patientRepository.save(newPatient);
+
+    }
+
     public List<Person> searchPersonByPesel(String pesel) {
         return personRepository.getAllByPeselStartingWith(pesel);
     }
@@ -43,10 +92,20 @@ public class PatientService {
     }
 
 
-    public List<Appointment> searchPatientAppHistory(long patientId) {
+    public List<VisitDTO> searchPatientAppHistory(long patientId) {
         Optional<Patient> optionalPatient = patientRepository.getByPersonId(patientId);
         if (optionalPatient.isPresent()) {
-            return appointmentRepository.getAllByPatient(optionalPatient.get());
+            List<Appointment> appointments = appointmentRepository.getAllByPatient(optionalPatient.get());
+            List<VisitDTO> visitDTOList = new ArrayList<>();
+            appointments.forEach(appointment ->
+                    visitDTOList.add(VisitDTO.builder()
+                            .visitDate(appointment.getDate())
+                            .doctorName(appointment.getDoctor().getName())
+                            .doctorLastName(appointment.getDoctor().getLastName())
+                            .divisionName(appointment.getDoctor().getDivision().getName())
+                            .build())
+            );
+            return visitDTOList;
         } else {
             return new ArrayList<>();
         }

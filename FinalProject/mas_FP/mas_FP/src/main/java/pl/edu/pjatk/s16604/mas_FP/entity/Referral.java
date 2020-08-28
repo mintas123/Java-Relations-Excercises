@@ -1,6 +1,7 @@
-package pl.edu.pjatk.s16604.mas_FP.model;
+package pl.edu.pjatk.s16604.mas_FP.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class Referral {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long referralId;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "patient_id")
     private Patient patient;
@@ -35,6 +37,7 @@ public class Referral {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;

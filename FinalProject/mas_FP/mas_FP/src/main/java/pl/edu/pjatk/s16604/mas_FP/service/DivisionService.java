@@ -3,8 +3,8 @@ package pl.edu.pjatk.s16604.mas_FP.service;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.pjatk.s16604.mas_FP.model.Division;
-import pl.edu.pjatk.s16604.mas_FP.model.Doctor;
+import pl.edu.pjatk.s16604.mas_FP.entity.Division;
+import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
 import pl.edu.pjatk.s16604.mas_FP.repository.DivisionRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.DoctorRepository;
 

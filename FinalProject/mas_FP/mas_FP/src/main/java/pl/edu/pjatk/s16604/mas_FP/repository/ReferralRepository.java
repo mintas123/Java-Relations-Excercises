@@ -1,9 +1,9 @@
 package pl.edu.pjatk.s16604.mas_FP.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.edu.pjatk.s16604.mas_FP.model.Doctor;
-import pl.edu.pjatk.s16604.mas_FP.model.Patient;
-import pl.edu.pjatk.s16604.mas_FP.model.Referral;
+import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
+import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
+import pl.edu.pjatk.s16604.mas_FP.entity.Referral;
 
 import javax.transaction.Transactional;
 import java.util.List;

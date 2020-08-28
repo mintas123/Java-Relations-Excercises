@@ -1,6 +1,6 @@
 package pl.edu.pjatk.s16604.mas_FP;
 
-import pl.edu.pjatk.s16604.mas_FP.model.Appointment;
+import pl.edu.pjatk.s16604.mas_FP.entity.Appointment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

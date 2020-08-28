@@ -5,17 +5,17 @@ import org.springframework.stereotype.Component;
 import pl.edu.pjatk.s16604.mas_FP.enums.ContractType;
 import pl.edu.pjatk.s16604.mas_FP.enums.DrugType;
 import pl.edu.pjatk.s16604.mas_FP.enums.Gender;
-import pl.edu.pjatk.s16604.mas_FP.model.Building;
-import pl.edu.pjatk.s16604.mas_FP.model.Division;
-import pl.edu.pjatk.s16604.mas_FP.model.Doctor;
-import pl.edu.pjatk.s16604.mas_FP.model.Drug;
-import pl.edu.pjatk.s16604.mas_FP.model.Meeting;
-import pl.edu.pjatk.s16604.mas_FP.model.Patient;
-import pl.edu.pjatk.s16604.mas_FP.model.Prescription;
-import pl.edu.pjatk.s16604.mas_FP.model.Receptionist;
-import pl.edu.pjatk.s16604.mas_FP.model.Referral;
-import pl.edu.pjatk.s16604.mas_FP.model.Room;
-import pl.edu.pjatk.s16604.mas_FP.model.TeleMedicine;
+import pl.edu.pjatk.s16604.mas_FP.entity.Building;
+import pl.edu.pjatk.s16604.mas_FP.entity.Division;
+import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
+import pl.edu.pjatk.s16604.mas_FP.entity.Drug;
+import pl.edu.pjatk.s16604.mas_FP.entity.Meeting;
+import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
+import pl.edu.pjatk.s16604.mas_FP.entity.Prescription;
+import pl.edu.pjatk.s16604.mas_FP.entity.Receptionist;
+import pl.edu.pjatk.s16604.mas_FP.entity.Referral;
+import pl.edu.pjatk.s16604.mas_FP.entity.Room;
+import pl.edu.pjatk.s16604.mas_FP.entity.TeleMedicine;
 import pl.edu.pjatk.s16604.mas_FP.repository.BuildingRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.DrugRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.ReceptionistRepository;
@@ -65,14 +65,15 @@ public class DataInitializer {
 
     public void initData() {
 
-        Doctor doctor = new Doctor("a", "b", "a@s.cpm", "a", "12345678910", LocalDate.of(1980, Month.MAY, 26), Gender.FEMALE, 5020);
-        Doctor doctor2 = new Doctor("a", "c", "s@s.ccc", "123", "12345678910", LocalDate.of(1999, Month.MAY, 22), Gender.MALE, 5000);
+        Doctor doctor = new Doctor("Andrzej", "Bartecki", "ab@gmail.com", "789456123", "80052655998", LocalDate.of(1980, Month.MAY, 26), Gender.MALE, 6600);
+        Doctor doctor2 = new Doctor("Daniel", "Dalski", "dada@gmail.com", "604535696", "93052235778", LocalDate.of(1993, Month.MAY, 22), Gender.MALE, 4800);
         doctorService.saveDoctor(doctor);
         doctorService.saveDoctor(doctor2);
 
 
-        Division div1 = new Division("AX", "some desc");
+        Division div1 = new Division("Dermatology", "some desc");
         divisionService.saveDivision(div1);
+        divisionService.addToStaff(div1.getDivisionId(), doctor.getPersonId());
         divisionService.addHead(div1.getDivisionId(), doctor.getPersonId());
         divisionService.addToStaff(div1.getDivisionId(), doctor2.getPersonId());
 
@@ -107,8 +108,8 @@ public class DataInitializer {
         roomRepository.save(room5);
         roomRepository.save(room6);
 
-        Prescription pres1 = new Prescription(false, LocalDate.of(2020, Month.JULY, 23), "SDF234", "blablalballbab");
-        Prescription pres2 = new Prescription(false, LocalDate.of(2020, Month.JULY, 25), "SDF234", "blablalballbab");
+        Prescription pres1 = new Prescription(false, LocalDate.of(2021, Month.JULY, 23), "SDF234", "blablalballbab");
+        Prescription pres2 = new Prescription(false, LocalDate.of(2021, Month.JULY, 25), "SDF234", "blablalballbab");
         prescriptionService.savePresc(pres1);
         prescriptionService.savePresc(pres2);
 

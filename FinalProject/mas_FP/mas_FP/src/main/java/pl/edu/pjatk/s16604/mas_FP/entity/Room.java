@@ -1,5 +1,6 @@
-package pl.edu.pjatk.s16604.mas_FP.model;
+package pl.edu.pjatk.s16604.mas_FP.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,11 +30,11 @@ public class Room {
     private Long roomId;
 
     private int roomNumber;
-
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "buildingId")
     private Building building;
-
+    @JsonIgnore
     @OneToMany(
             fetch = FetchType.EAGER,
             mappedBy = "appointmentId")

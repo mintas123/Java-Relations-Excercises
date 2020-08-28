@@ -4,8 +4,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pjatk.s16604.mas_FP.Utils;
-import pl.edu.pjatk.s16604.mas_FP.model.Appointment;
-import pl.edu.pjatk.s16604.mas_FP.model.Doctor;
+import pl.edu.pjatk.s16604.mas_FP.entity.Appointment;
+import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
 import pl.edu.pjatk.s16604.mas_FP.repository.AppointmentRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.DoctorRepository;
 

@@ -1,9 +1,9 @@
 package pl.edu.pjatk.s16604.mas_FP.repository;
 
 import org.springframework.data.jpa.repository.Query;
-import pl.edu.pjatk.s16604.mas_FP.model.Appointment;
-import pl.edu.pjatk.s16604.mas_FP.model.Doctor;
-import pl.edu.pjatk.s16604.mas_FP.model.Patient;
+import pl.edu.pjatk.s16604.mas_FP.entity.Appointment;
+import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
+import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;

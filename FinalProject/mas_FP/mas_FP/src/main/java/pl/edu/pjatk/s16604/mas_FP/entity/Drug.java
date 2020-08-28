@@ -1,4 +1,4 @@
-package pl.edu.pjatk.s16604.mas_FP.model;
+package pl.edu.pjatk.s16604.mas_FP.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

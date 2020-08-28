@@ -1,7 +1,7 @@
 package pl.edu.pjatk.s16604.mas_FP.repository;
 
 import pl.edu.pjatk.s16604.mas_FP.enums.ContractType;
-import pl.edu.pjatk.s16604.mas_FP.model.Receptionist;
+import pl.edu.pjatk.s16604.mas_FP.entity.Receptionist;
 
 import javax.transaction.Transactional;
 import java.util.List;
