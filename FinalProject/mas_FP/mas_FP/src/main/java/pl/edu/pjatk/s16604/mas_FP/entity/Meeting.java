@@ -24,8 +24,7 @@ public class Meeting extends Appointment {
     @JoinColumn(name = "roomId")
     private Room room;
 
-    public Meeting(LocalDateTime date, Room room) {
+    public Meeting(LocalDateTime date) {
         super(date);
-        this.room = room;
     }
 }

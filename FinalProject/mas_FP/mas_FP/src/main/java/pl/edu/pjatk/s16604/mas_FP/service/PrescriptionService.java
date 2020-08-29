@@ -39,18 +39,18 @@ public class PrescriptionService {
 
     public void addDrug(Long prescId, Long drugId) {
         Drug drug = drugRepository.getAllByDrugId(drugId);
-        Prescription prescription = prescriptionRepository.getAllByPrescriptionId(prescId);
-        if (drug != null && prescription != null) {
-            prescription.addDrugg(drug);
-            prescriptionRepository.save(prescription);
+        Optional<Prescription> prescriptionOptional = prescriptionRepository.getAllByPrescriptionId(prescId);
+        if (drug != null && prescriptionOptional.isPresent()) {
+            prescriptionOptional.get().addDrugg(drug);
+            prescriptionRepository.save(prescriptionOptional.get());
         }
     }
 
-    public void markAsSaved(Long referralId) {
-        Prescription prescription = prescriptionRepository.getAllByPrescriptionId(referralId);
-        if (prescription != null && !prescription.isUsed()) {
-            prescription.setUsed(true);
-            savePresc(prescription);
+    public void markAsUsed(Long prescId) {
+        Optional<Prescription> prescriptionOptional = prescriptionRepository.getAllByPrescriptionId(prescId);
+        if (prescriptionOptional.isPresent() && !prescriptionOptional.get().isUsed()) {
+            prescriptionOptional.get().setUsed(true);
+            savePresc(prescriptionOptional.get());
         }
     }
 

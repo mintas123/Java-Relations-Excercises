@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TeleMedicine extends Appointment {
 
-    private boolean canBeRemote;
+    private boolean canGivePrescription;
 
-    public TeleMedicine(LocalDateTime date, boolean canBeRemote) {
+    public TeleMedicine(LocalDateTime date, boolean canGivePrescription) {
         super(date);
-        this.canBeRemote = canBeRemote;
+        this.canGivePrescription = canGivePrescription;
     }
 }

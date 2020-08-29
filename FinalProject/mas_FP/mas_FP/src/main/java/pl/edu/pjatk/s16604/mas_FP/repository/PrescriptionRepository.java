@@ -7,11 +7,12 @@ import pl.edu.pjatk.s16604.mas_FP.entity.Prescription;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public interface PrescriptionRepository extends CrudRepository<Prescription, Long> {
 
-    Prescription getAllByPrescriptionId(long id);
+    Optional<Prescription> getAllByPrescriptionId(long id);
 
     List<Prescription> getAllByPatient(Patient patient);
 

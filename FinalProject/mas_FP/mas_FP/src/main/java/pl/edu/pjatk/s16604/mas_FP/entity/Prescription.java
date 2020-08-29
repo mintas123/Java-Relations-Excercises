@@ -52,6 +52,7 @@ public class Prescription {
     @ManyToMany(mappedBy = "useHistory",
             fetch = FetchType.EAGER)
     private Set<Drug> drugs = new HashSet<>();
+
     @NotBlank
     private String eReceptaCode;
 

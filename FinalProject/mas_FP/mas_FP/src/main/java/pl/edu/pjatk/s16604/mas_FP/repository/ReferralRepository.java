@@ -7,11 +7,12 @@ import pl.edu.pjatk.s16604.mas_FP.entity.Referral;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public interface ReferralRepository extends CrudRepository<Referral, Long> {
 
-    Referral getAllByReferralId(long id);
+    Optional<Referral> getAllByReferralId(long id);
 
     List<Referral> getAllByPatient(Patient patient);
 

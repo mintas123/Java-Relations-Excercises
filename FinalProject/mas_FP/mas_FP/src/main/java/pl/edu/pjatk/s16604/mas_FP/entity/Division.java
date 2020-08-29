@@ -5,17 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,12 @@ public class Division {
     @NotBlank
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.EAGER,
+            mappedBy = "divisions"
+    )
+    private Set<Building> buildings = new HashSet<>();
+
+    @ManyToOne()
     @JoinColumn(name = "head_id")
     private Doctor head;
     @NotBlank
@@ -60,6 +66,18 @@ public class Division {
         }
     }
 
+    public void addBuilding(Building building) {
+        if (!buildings.contains(building)) {
+            buildings.add(building);
+        }
+    }
+
+    public void removeBuilding(Building building) {
+        if (buildings.contains(building)) {
+            buildings.remove(building);
+        }
+    }
+
 
     @Override
     public String toString() {
@@ -68,7 +86,6 @@ public class Division {
                 ", name='" + name + '\'' +
                 ", head=" + head +
                 ", description='" + description + '\'' +
-//                ", staff=" + staff.forEach(doctor -> "d"); +
                 '}';
     }
 }

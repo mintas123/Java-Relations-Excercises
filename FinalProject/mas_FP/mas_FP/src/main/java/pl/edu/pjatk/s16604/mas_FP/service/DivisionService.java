@@ -3,8 +3,10 @@ package pl.edu.pjatk.s16604.mas_FP.service;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.pjatk.s16604.mas_FP.entity.Building;
 import pl.edu.pjatk.s16604.mas_FP.entity.Division;
 import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
+import pl.edu.pjatk.s16604.mas_FP.repository.BuildingRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.DivisionRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.DoctorRepository;
 
@@ -17,6 +19,9 @@ public class DivisionService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private BuildingRepository buildingRepository;
 
     public void saveDivision(Division division) {
         divisionRepository.save(division);
@@ -81,6 +86,19 @@ public class DivisionService {
                 division.removeFromStaff(doctor);
                 divisionRepository.save(division);
                 doctorRepository.save(doctor);
+            }
+        }
+    }
+
+    public void addToBuildings(Long divisionId, Long buildingId) {
+        Building building = buildingRepository.getAllByBuildingId(buildingId);
+        Division division = divisionRepository.getAllByDivisionId(divisionId);
+        if (building != null && division != null) {
+            if (!division.getBuildings().contains(building) && !building.getDivisions().contains(division)) {
+                division.addBuilding(building);
+                building.addDivision(division);
+                divisionRepository.save(division);
+                buildingRepository.save(building);
             }
         }
     }

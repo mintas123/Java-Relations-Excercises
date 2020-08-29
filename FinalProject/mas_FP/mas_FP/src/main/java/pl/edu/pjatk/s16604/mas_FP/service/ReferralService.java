@@ -33,11 +33,11 @@ public class ReferralService {
         referralRepository.save(referral);
     }
 
-    public void markAsSaved(Long referralId) {
-        Referral referral = referralRepository.getAllByReferralId(referralId);
-        if (referral != null && !referral.isUsed()) {
-            referral.setUsed(true);
-            saveReferral(referral);
+    public void markAsUsed(Long referralId) {
+        Optional<Referral> optionalReferral = referralRepository.getAllByReferralId(referralId);
+        if (optionalReferral.isPresent() && !optionalReferral.get().isUsed()) {
+            optionalReferral.get().setUsed(true);
+            saveReferral(optionalReferral.get());
         }
     }
 
