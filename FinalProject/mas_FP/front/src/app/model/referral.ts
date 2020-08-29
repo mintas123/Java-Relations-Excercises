@@ -1,8 +1,8 @@
 
 export class Referral {
-  constructor(public doctor: number,
-              public patient: number,
-              public visit: number,
+  constructor(public doctorName: string,
+              public doctorLastName: string,
+              public divisionName: string,
               public isUsed: boolean,
               public dateFrom: Date,
               public dateTo: Date,

@@ -71,7 +71,6 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
 
   selectPatient(value: Patient) {
     this.patientService.patientSelected.emit(value);
-    console.log(value);
     this.router.navigate([value.personId], {relativeTo: this.route});
 
   }
@@ -79,17 +78,6 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
   getPatientId(patient) {
     return patient.id;
   }
-
-  // todo temp
-  // getPatientVisits() {
-  //   this.history = this.visitService.findVisitsByPatient(this.selectedPatient);
-  //
-  //   this.history.forEach(
-  //     (visit: Visit) => {
-  //       this.dates.push(visit.date);
-  //     }
-  //   );
-  // }
 
   displayFn(subject) {
     return subject ? subject.name + ' ' + subject.lastName : undefined;

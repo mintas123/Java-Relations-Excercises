@@ -40,11 +40,6 @@ export class PatientHistoryComponent implements OnInit {
     this.history = this.visitService.visits;
   }
 
-
-  // getVisitDoctorInfo(visit: Visit): Doctor {
-  //   return this.doctorService.getDoctor(visit.doctor);
-  // }
-
   onBackClick() {
     this.location.back();
   }

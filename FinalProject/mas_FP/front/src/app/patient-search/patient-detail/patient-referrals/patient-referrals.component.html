@@ -10,8 +10,15 @@
   <mat-list #date>
     <mat-list-item *ngFor="let referral of referrals">
       {{referral.dateFrom | date}} - {{referral.dateTo | date}}
-      ,
-      <strong class="text-muted"> {{getReferralDoctorInfo(referral).name + ' ' + getReferralDoctorInfo(referral).lName}}</strong>
+
+       {{', ' + referral.doctorName+ ' ' + referral.doctorLastName + ' - '}}
+      <strong class="text-muted"> {{referral.divisionName}}</strong>
+      <p class="mt-sm-3">
+        <mat-checkbox disabled="true" class="big-checkbox"
+                      [checked]="referral.isUsed">
+        </mat-checkbox>
+        <span class="ml-1"> used </span>
+      </p>
     </mat-list-item>
   </mat-list>
 </div>
