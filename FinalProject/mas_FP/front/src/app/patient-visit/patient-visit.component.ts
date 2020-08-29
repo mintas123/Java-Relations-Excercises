@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DoctorService} from '../services/doctor.service';
@@ -29,15 +29,21 @@ export class PatientVisitComponent implements OnInit {
   startDate: Date;
   endDate: Date;
 
+  patientId: number;
   selectedDoctor: Doctor;
   selectedPatient: Patient;
 
+  checkedRef = false;
+
+  dateSearchFinished = false;
   dates: Date[] = [];
   selectedVisit: Visit;
 
-  fControl = new FormControl();
-  options = this.doctorService.getDoctors();
+  myControl = new FormControl();
+  options: Doctor[];
   filteredOptions: Observable<Doctor[]>;
+
+  subscription: Subscription;
 
   constructor(private doctorService: DoctorService,
               private patientService: PatientService,
@@ -48,8 +54,17 @@ export class PatientVisitComponent implements OnInit {
 
   ngOnInit(): void {
     this.initFilter();
-    this.maxDateStart.setDate( this.minDateStart.getDate() + 90);
-    this.maxDateEnd.setDate( this.minDateStart.getDate() + 90);
+    this.maxDateStart.setDate(this.minDateStart.getDate() + 90);
+    this.maxDateEnd.setDate(this.minDateStart.getDate() + 90);
+
+
+    this.doctorService.fetchDoctors();
+    this.subscription = this.doctorService.doctorsChanged.subscribe(
+      (doctors: Doctor[]) => {
+        this.options = doctors;
+      }
+    );
+    this.options = this.doctorService.getDoctors();
 
     this.doctorService.doctorSelected.subscribe(
       (doctor: Doctor) => {
@@ -57,12 +72,13 @@ export class PatientVisitComponent implements OnInit {
       }
     );
 
-    const id = this.route.snapshot.params.id;
-    this.selectedPatient = this.patientService.getPatient(id);
+    this.patientId = this.route.snapshot.params.id;
+    this.selectedPatient = this.patientService.getPatient(this.patientId);
   }
 
   onDoctorClick() {
     this.initFilter();
+    this.findVisits();
   }
 
   onBackClick() {
@@ -76,25 +92,36 @@ export class PatientVisitComponent implements OnInit {
   selectDoctor(value) {
     this.doctorService.doctorSelected.emit(value);
     // this.selectedDoctor = value;
+    this.selectedPatient = this.patientService.getPatient(this.patientId);
+
   }
 
   getDoctorId(doc) {
     return this.doctorService.getDoctorId(doc);
   }
 
-  findVisits(){
-    console.log('find visit started');
+  findVisits() {
     if (this.startDate && this.endDate && this.selectedDoctor && this.selectedPatient) {
-      this.dates = this.visitService.getDatesBetween(this.startDate, this.endDate);
+      console.log('finding new dates..');
+      this.visitService.getDatesBetween(this.selectedPatient.personId,
+        this.selectedDoctor.personId,
+        this.startDate, this.endDate, this.checkedRef);
+      this.visitService.datesChanged.subscribe(
+        (dates: Date[]) => {
+          this.dates = dates;
+          this.dateSearchFinished = true;
+        }
+      );
+      this.dates = this.visitService.getDates();
     }
   }
 
   displayFn(subject) {
-    return subject ? subject.name + ' ' + subject.lName : undefined;
+    return subject ? subject.name + ' ' + subject.lastName : undefined;
   }
 
   initFilter() {
-    this.filteredOptions = this.fControl.valueChanges.pipe(
+    this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );
@@ -105,8 +132,8 @@ export class PatientVisitComponent implements OnInit {
 
     return this.options.filter(
       option => option.name.toLowerCase().includes(filterValue) ||
-        option.lName.toLowerCase().includes(filterValue) ||
-        option.division.name.toLowerCase().includes(filterValue));
+        option.lastName.toLowerCase().includes(filterValue) ||
+        option.divisionName.toLowerCase().includes(filterValue));
   }
 
   // // for END picker

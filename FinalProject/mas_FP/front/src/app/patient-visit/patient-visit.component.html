@@ -11,7 +11,7 @@
                  #input id="search"
                  placeholder="Doctor or Division..."
                  [matAutocomplete]="auto"
-                 [formControl]="fControl">
+                 [formControl]="myControl">
 
           <mat-autocomplete autoActiveFirstOption
                             #auto="matAutocomplete"
@@ -20,8 +20,8 @@
             <mat-option *ngFor="let option of filteredOptions | async"
                         [value]="option"
                         (click)="onDoctorClick()">
-              <span>{{option.name}} {{option.lName}} </span> |
-              <small class="text-muted">{{option.division.name}}</small>
+              <span>{{option.name}} {{option.lastName}} </span> |
+              <small class="text-muted">{{option.divisionName}}</small>
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
@@ -37,8 +37,13 @@
                [(ngModel)]="startDate" matInput
                [matDatepicker]="pickerStart"
                (click)="findVisits()">
-        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-        <mat-datepicker #pickerStart></mat-datepicker>
+        <mat-datepicker-toggle matSuffix
+                               [for]="pickerStart"
+                               (click)="findVisits()">
+        </mat-datepicker-toggle>
+        <mat-datepicker #pickerStart
+                        (click)="findVisits()">
+        </mat-datepicker>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -47,8 +52,13 @@
                [(ngModel)]="endDate" matInput
                [matDatepicker]="pickerEnd"
                (click)="findVisits()">
-        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-        <mat-datepicker #pickerEnd></mat-datepicker>
+        <mat-datepicker-toggle matSuffix
+                               [for]="pickerEnd"
+                               (click)="findVisits()">
+        </mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd
+                        (click)="findVisits()">
+        </mat-datepicker>
       </mat-form-field>
 
     </div>
@@ -59,41 +69,33 @@
 
       <h3>Has a referral:
         <mat-checkbox class="big-checkbox"
-                      [checked]="true">
+                      [checked]="checkedRef "
+                      (click)="findVisits()">
         </mat-checkbox>
       </h3>
 
     </div>
   </div>
-  <hr>
+  <hr *ngIf="dates.length==0">
 
-  <div class="row">
-    <div class="col-md-auto offset-md-3">
-      <p *ngIf="selectedPatient">Patient: {{selectedPatient.name}} {{selectedPatient.lastName}}, {{selectedPatient.pesel}}
-      </p>
-      <p *ngIf="selectedDoctor">Doctor: {{selectedDoctor.name}} {{selectedDoctor.lName}}
-        , {{selectedDoctor.division.name}}
-      </p>
-      <p *ngIf="startDate && endDate">From: {{startDate | date}} To:  {{endDate | date}}
-      </p>
+  <div class="row" *ngIf="dates.length>0 " >
+    <div class="col-md-6 offset-md-3">
+
+      <h2>Free spots: </h2>
+      <mat-selection-list dense [multiple]="false" #datesList>
+        <mat-list-option *ngFor="let spot of dates"
+                         style="display:inline-block; width:50%; text-align:center;">
+          {{spot | date:'HH:mm   dd.MM.yyyy '}}
+        </mat-list-option>
+      </mat-selection-list>
 
 
     </div>
   </div>
 
-
-  <div class="row" *ngIf="dates">
-    <div class="col-md-auto offset-md-3">
-
-      <h2>Free spots: </h2>
-      <mat-selection-list #date>
-        <mat-list-option *ngFor="let date of dates">
-          {{date}}
-        </mat-list-option>
-      </mat-selection-list>
-
-
-
+  <div class="row" *ngIf="dates.length==0 && dateSearchFinished">
+    <div class="col-md-6 offset-md-3">
+      <h2>There are no free spots left. </h2>
     </div>
   </div>
 

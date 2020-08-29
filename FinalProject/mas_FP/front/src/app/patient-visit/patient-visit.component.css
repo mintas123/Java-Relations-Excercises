@@ -22,3 +22,15 @@
   vertical-align: middle;
 }
 
+mat-selection-list {
+  max-height: 200px;
+  overflow: auto;
+}
+/*.list-group{*/
+/*  max-height: 40px;*/
+/*  max-width: available;*/
+/*  margin-bottom: 10px;*/
+/*  overflow:scroll;*/
+/*  -webkit-overflow-scrolling: touch;*/
+/*}*/
+

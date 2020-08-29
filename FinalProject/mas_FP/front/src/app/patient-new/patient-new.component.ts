@@ -26,17 +26,6 @@ export class PatientNewComponent implements OnInit {
   }
 
   private initForm() {
-
-    // const name = '';
-    // const lName = '';
-    // const pesel = '';
-    // const sex = '';
-    // const email = '';
-    // const phone  = '';
-    // const birthday = '';
-    // const isVIP = '';
-    // const insurance = '';
-
     this.patientForm = new FormGroup({
       name: new FormControl(null, Validators.required),
       lName: new FormControl(null, Validators.required),
@@ -69,7 +58,7 @@ export class PatientNewComponent implements OnInit {
   }
 
   onReturn() {
-    this.router.navigate(['/'], {relativeTo: this.route});
+    this.router.navigate(['/search']);
   }
 
 

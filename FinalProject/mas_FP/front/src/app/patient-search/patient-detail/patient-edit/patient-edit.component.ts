@@ -11,7 +11,7 @@ import {Patient} from '../../../model/patient';
 })
 export class PatientEditComponent implements OnInit {
 
-  id: number;
+  patientId: number;
   patientForm: FormGroup;
   selectedPatient: Patient;
 
@@ -24,13 +24,16 @@ export class PatientEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.patientId = this.route.snapshot.params.id;
+    this.selectedPatient = this.patientService.getPatient(this.patientId);
     this.initForm();
+
   }
 
 
   private initForm() {
-    this.id = this.route.snapshot.params.id;
-    this.selectedPatient = this.patientService.getPatient(this.id);
+    console.log(this.selectedPatient);
 
     this.patientForm = new FormGroup({
       name: new FormControl(this.selectedPatient.name, Validators.required),
@@ -49,7 +52,7 @@ export class PatientEditComponent implements OnInit {
 
   onUpdate() {
     const newPatient = new Patient(
-      this.id,
+      this.patientId,
       this.patientForm.value.name,
       this.patientForm.value.lastName,
       this.patientForm.value.pesel,
@@ -61,13 +64,13 @@ export class PatientEditComponent implements OnInit {
       this.patientForm.value.isVIP,
       this.patientForm.value.insurance,
     );
-    this.patientService.updatePatient(this.id, newPatient);
+    this.patientService.updatePatient(this.patientId, newPatient);
     this.onBackClick();
   }
 
 
   onBackClick() {
-    this.router.navigate(['/search', this.id]);
+    this.router.navigate(['/search', this.patientId]);
   }
 
 

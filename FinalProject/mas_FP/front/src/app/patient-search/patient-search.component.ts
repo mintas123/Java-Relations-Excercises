@@ -16,10 +16,6 @@ import {logger} from 'codelyzer/util/logger';
 })
 export class PatientSearchComponent implements OnInit, OnDestroy {
 
-// todo temp
-//   history: Visit[];
-//   dates: Date[] = [];
-
   selectedPatient: Patient;
   myControl = new FormControl();
   options: Patient[];
@@ -34,6 +30,7 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // this.router.navigate(['']); // do I want to redirect to /search on refresh?
     this.initFilter();
 
     this.patientService.fetchPatients();
