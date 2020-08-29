@@ -1,6 +1,7 @@
 package pl.edu.pjatk.s16604.mas_FP.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import pl.edu.pjatk.s16604.mas_FP.DTO.DoctorDTO;
 import pl.edu.pjatk.s16604.mas_FP.DTO.PatientDTO;
+import pl.edu.pjatk.s16604.mas_FP.DTO.ReferralDTO;
 import pl.edu.pjatk.s16604.mas_FP.DTO.VisitDTO;
-import pl.edu.pjatk.s16604.mas_FP.entity.Appointment;
 import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
 import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
 import pl.edu.pjatk.s16604.mas_FP.entity.Person;
-import pl.edu.pjatk.s16604.mas_FP.entity.Referral;
 import pl.edu.pjatk.s16604.mas_FP.service.DivisionService;
 import pl.edu.pjatk.s16604.mas_FP.service.DoctorService;
 import pl.edu.pjatk.s16604.mas_FP.service.PatientService;
@@ -26,6 +27,8 @@ import pl.edu.pjatk.s16604.mas_FP.service.VisitService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -65,7 +68,7 @@ public class Controller {
     }
 
     @GetMapping({"/patient/referrals/{patientId}"})
-    public List<Referral> searchPatientRefHistory(@PathVariable long patientId) {
+    public List<ReferralDTO> searchPatientRefHistory(@PathVariable long patientId) {
         return patientService.searchPatientRefHistory(patientId);
     }
 
@@ -86,11 +89,14 @@ public class Controller {
     }
 
 
+    // to search all doctors
+    @GetMapping({"/doctor"})
+    public List<DoctorDTO> getAllDoctors() {
+        return doctorService.getAllDoctors();
+    }
 
-
-
-
-
+//    @GetMapping({"visit/{doctorId}/{patientId}/{dateFrom}/{dateTo}/{hasReferral}"})
+//    public List<LocalDateTime> getAllSpots
 
 
     @GetMapping({"/patient/pesel/{pesel}"})
@@ -103,19 +109,29 @@ public class Controller {
         return patientService.searchPersonByPesel(pesel);
     }
 
-    @GetMapping({"/doctor/{string}"})
-    public List<Doctor> searchDoctorByIdOrName(@PathVariable String string) {
-        return doctorService.searchDoctorByIdOrName(string);
-    }
+//    @GetMapping({"/doctor/{string}"})
+//    public List<Doctor> searchDoctorByIdOrName(@PathVariable String string) {
+//        return doctorService.searchDoctorByIdOrName(string);
+//    }
 
 
-    @GetMapping({"/appointment/{doctor}/{dateFrom}/{dateTo}"})
-    public List<LocalDateTime> getSpots(@PathVariable String doctor, @PathVariable LocalDate dateFrom, @PathVariable LocalDate dateTo) {
-        List<Doctor> doctor1 = doctorService.searchDoctorByIdOrName(doctor);
-        if (doctor1.isEmpty()) {
-            return null;
+    @GetMapping({"/appointment/{doctorId}/{patientId}/{dateFromSt}/{dateToSt}/{hasReferral}"})
+    public List<LocalDateTime> getSpots(@PathVariable long doctorId,
+                                        @PathVariable long patientId,
+                                        @PathVariable String dateFromSt,
+                                        @PathVariable String dateToSt,
+                                        @PathVariable boolean hasReferral) {
+        Doctor doctor = doctorService.searchDoctorById(doctorId);
+        Patient patient = patientService.searchPatientById(patientId);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime dateFrom = LocalDate.parse(dateFromSt,dtf).atStartOfDay();
+        LocalDateTime dateTo = LocalDate.parse(dateToSt,dtf).atStartOfDay();
+
+        if (patient != null && doctor != null) {
+            return doctorService.searchByCriteria(doctor,patient, dateFrom, dateTo, hasReferral);
         }
-        return doctorService.searchByCriteria(doctor1.get(0), dateFrom, dateTo);
+        return new ArrayList<>();
     }
 
 

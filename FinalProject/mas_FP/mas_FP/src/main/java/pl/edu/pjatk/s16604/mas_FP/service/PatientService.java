@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pjatk.s16604.mas_FP.DTO.PatientDTO;
+import pl.edu.pjatk.s16604.mas_FP.DTO.ReferralDTO;
 import pl.edu.pjatk.s16604.mas_FP.DTO.VisitDTO;
 import pl.edu.pjatk.s16604.mas_FP.entity.Appointment;
 import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
@@ -111,10 +112,21 @@ public class PatientService {
         }
     }
 
-    public List<Referral> searchPatientRefHistory(long patientId) {
+    public List<ReferralDTO> searchPatientRefHistory(long patientId) {
         Optional<Patient> optionalPatient = patientRepository.getByPersonId(patientId);
         if (optionalPatient.isPresent()) {
-            return referralRepository.getAllByPatient(optionalPatient.get());
+            List<Referral> referrals = referralRepository.getAllByPatient(optionalPatient.get());
+            List<ReferralDTO> referralDTOList = new ArrayList<>();
+            referrals.forEach(referral ->
+                    referralDTOList.add(ReferralDTO.builder()
+                            .doctorName(referral.getDoctor().getName())
+                            .doctorLastName(referral.getDoctor().getLastName())
+                            .divisionName(referral.getDoctor().getDivision().getName())
+                            .isUsed(referral.isUsed())
+                            .dateFrom(referral.getDateFrom())
+                            .dateTo(referral.getDateTo()).build())
+            );
+            return referralDTOList;
         } else {
             return new ArrayList<>();
         }

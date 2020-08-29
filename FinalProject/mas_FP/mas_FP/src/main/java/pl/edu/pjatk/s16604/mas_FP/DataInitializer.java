@@ -77,10 +77,22 @@ public class DataInitializer {
         divisionService.addHead(div1.getDivisionId(), doctor.getPersonId());
         divisionService.addToStaff(div1.getDivisionId(), doctor2.getPersonId());
 
-        Patient patient1 = new Patient("xxx", "bbb", "aaa@gmail.com", "12344432", "11122233309", LocalDate.of(1966, Month.MAY, 22), Gender.MALE, LocalDate.now(), "AXA", false);
-        Patient patient2 = new Patient("aaa", "bbb", "bbb@gmail.com", "34243244", "44455565492", LocalDate.of(1986, Month.MAY, 21), Gender.MALE, LocalDate.now(), "X", true);
+        Patient patient1 = new Patient("Anna", "Małowiecka", "anama@gmail.com", "432523634", "10301608556", LocalDate.of(2010, Month.OCTOBER, 16), Gender.FEMALE, LocalDate.now(), "AXA", false);
+        Patient patient2 = new Patient("Zofia", "Śliwińska", "zsliwinska@gmail.com", "798369528", "10200158966", LocalDate.of(2000, Month.JANUARY, 1), Gender.FEMALE, LocalDate.now(), "X", true);
+        Patient patient3 = new Patient("Radosław", "Biedrzycki", "radbied@gmail.com", "779582195", "98053259964", LocalDate.of(1998, Month.MAY, 23), Gender.MALE, LocalDate.now(), "X", true);
+        Patient patient4 = new Patient("Jakub", "Mróz", "kumroz@gmail.com", "787312931", "99042608556", LocalDate.of(1999, Month.APRIL, 26), Gender.MALE, LocalDate.now(), "X", true);
+        Patient patient5 = new Patient("Piotr", "Mróz", "piotmrz@gmail.com", "777999828", "69100148775", LocalDate.of(1969, Month.OCTOBER, 1), Gender.MALE, LocalDate.now(), "X", true);
+        Patient patient6 = new Patient("Teresa", "Tarnaś", "teretarnas@gmail.com", "999654199", "66051080778", LocalDate.of(1966, Month.MAY, 10), Gender.MALE, LocalDate.now(), "X", true);
+        Patient patient7 = new Patient("Adrianna", "Urbaniak", "a.z.urbaniak@gmail.com", "604318955", "90090254880", LocalDate.of(1990, Month.SEPTEMBER, 2), Gender.FEMALE, LocalDate.now(), "X", true);
+        Patient patient8 = new Patient("Krzysztof", "Zieliński", "krzysiuziel@gmail.com", "787656989", "76112566604", LocalDate.of(1976, Month.NOVEMBER, 12), Gender.MALE, LocalDate.now(), "X", true);
         patientService.searchAndCreatePatient(patient1);
         patientService.searchAndCreatePatient(patient2);
+        patientService.searchAndCreatePatient(patient3);
+        patientService.searchAndCreatePatient(patient4);
+        patientService.searchAndCreatePatient(patient5);
+        patientService.searchAndCreatePatient(patient6);
+        patientService.searchAndCreatePatient(patient7);
+        patientService.searchAndCreatePatient(patient8);
 
         Receptionist receptionist1 = new Receptionist("anna", "baaab", "annabaab@gmail.com", "333444222", "43253497603", LocalDate.of(1976, Month.MAY, 22), Gender.FEMALE, 3000, ContractType.MANDATE);
         Receptionist receptionist2 = new Receptionist("daniel", "baaab", "faniel@gmail.com", "123421344", "56786497603", LocalDate.of(1986, Month.MAY, 22), Gender.MALE, 4000, ContractType.EMPLOYMENT);
