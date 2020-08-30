@@ -93,7 +93,9 @@ import {DatePipe} from '@angular/common';
     MatDatepickerModule,
     MatSelectModule,
     MatNativeDateModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+
   ],
   exports: [
     A11yModule,

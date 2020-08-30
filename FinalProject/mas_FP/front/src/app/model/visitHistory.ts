@@ -1,4 +1,4 @@
-export class Visit {
+export class VisitHistory {
   constructor(public doctorName: string,
               public doctorLastName: string,
               public divisionName: string,

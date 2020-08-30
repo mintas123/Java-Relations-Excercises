@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -8,8 +8,11 @@ import {Doctor} from '../model/doctor';
 import {Patient} from '../model/patient';
 import {PatientService} from '../services/patient.service';
 import {Location} from '@angular/common';
-import {Visit} from '../model/visit';
+import {VisitHistory} from '../model/visitHistory';
 import {VisitService} from '../services/visit.service';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {HttpClient} from '@angular/common/http';
+import {NewVisit} from '../model/newVisit';
 
 
 @Component({
@@ -32,13 +35,13 @@ export class PatientVisitComponent implements OnInit {
   patientId: number;
   selectedDoctor: Doctor;
   selectedPatient: Patient;
-
   checkedRef = false;
 
+  bookingFinished = false;
   dateSearchFinished = false;
-  dates: Date[] = [];
-  selectedVisit: Visit;
 
+  dates: Date[] = [];
+  selectedDate: Date;
   myControl = new FormControl();
   options: Doctor[];
   filteredOptions: Observable<Doctor[]>;
@@ -49,7 +52,9 @@ export class PatientVisitComponent implements OnInit {
               private patientService: PatientService,
               private visitService: VisitService,
               private route: ActivatedRoute,
-              private location: Location) {
+              private router: Router,
+              private location: Location,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -78,26 +83,38 @@ export class PatientVisitComponent implements OnInit {
 
   onDoctorClick() {
     this.initFilter();
-    this.findVisits();
   }
 
   onBackClick() {
     this.location.back();
   }
 
-  onBookClick() {
+  onBookClick(ref: TemplateRef<any>) {
+    this.openDialogWithRef(ref);
+
+    const newVisit = new NewVisit(
+      this.selectedDoctor.personId,
+      +this.patientId,
+      this.selectedDate
+    );
+    console.log(newVisit);
+    this.visitService.addNewVisit(newVisit);
+    this.bookingFinished = true;
     return true;
   }
 
   selectDoctor(value) {
     this.doctorService.doctorSelected.emit(value);
-    // this.selectedDoctor = value;
     this.selectedPatient = this.patientService.getPatient(this.patientId);
 
   }
 
   getDoctorId(doc) {
     return this.doctorService.getDoctorId(doc);
+  }
+
+  onDateSelection(date: Date) {
+    this.selectedDate = date;
   }
 
   findVisits() {
@@ -125,6 +142,10 @@ export class PatientVisitComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value))
     );
+  }
+
+  private openDialogWithRef(ref: TemplateRef<any>) {
+    this.dialog.open(ref);
   }
 
   private _filter(value: string): Doctor[] {

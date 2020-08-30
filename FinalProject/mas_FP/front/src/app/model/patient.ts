@@ -1,9 +1,9 @@
-import {Visit} from './visit';
+import {VisitHistory} from './visitHistory';
 import {Referral} from './referral';
 
 export class Patient {
 
-  public appointments: Visit[];
+  public appointments: VisitHistory[];
   public referrals: Referral[];
 
   constructor(

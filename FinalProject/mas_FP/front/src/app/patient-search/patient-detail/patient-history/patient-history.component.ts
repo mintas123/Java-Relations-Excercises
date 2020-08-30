@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Visit} from '../../../model/visit';
+import {VisitHistory} from '../../../model/visitHistory';
 import {PatientService} from '../../../services/patient.service';
 import {VisitService} from '../../../services/visit.service';
 import {DoctorService} from '../../../services/doctor.service';
@@ -16,7 +16,7 @@ export class PatientHistoryComponent implements OnInit {
 
 
   selectedPatient: Patient;
-  history: Visit[];
+  history: VisitHistory[];
 
   constructor(private patientService: PatientService,
               private visitService: VisitService,
@@ -30,7 +30,7 @@ export class PatientHistoryComponent implements OnInit {
 
     this.visitService.fetchVisits(patientId);
     this.visitService.visitChanged.subscribe(
-      (visits: Visit[]) => {
+      (visits: VisitHistory[]) => {
         this.history = visits;
       }
     );

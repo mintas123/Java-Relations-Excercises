@@ -35,14 +35,11 @@
         <mat-label>Start date</mat-label>
         <input [min]="minDateStart" [max]="maxDateStart"
                [(ngModel)]="startDate" matInput
-               [matDatepicker]="pickerStart"
-               (click)="findVisits()">
+               [matDatepicker]="pickerStart">
         <mat-datepicker-toggle matSuffix
-                               [for]="pickerStart"
-                               (click)="findVisits()">
+                               [for]="pickerStart">
         </mat-datepicker-toggle>
-        <mat-datepicker #pickerStart
-                        (click)="findVisits()">
+        <mat-datepicker #pickerStart>
         </mat-datepicker>
       </mat-form-field>
 
@@ -50,14 +47,11 @@
         <mat-label>End date</mat-label>
         <input [min]="minDateStart" [max]="maxDateEnd"
                [(ngModel)]="endDate" matInput
-               [matDatepicker]="pickerEnd"
-               (click)="findVisits()">
+               [matDatepicker]="pickerEnd">
         <mat-datepicker-toggle matSuffix
-                               [for]="pickerEnd"
-                               (click)="findVisits()">
+                               [for]="pickerEnd">
         </mat-datepicker-toggle>
-        <mat-datepicker #pickerEnd
-                        (click)="findVisits()">
+        <mat-datepicker #pickerEnd>
         </mat-datepicker>
       </mat-form-field>
 
@@ -65,15 +59,17 @@
   </div>
 
   <div class="row">
-    <div class="col-md-auto offset-md-3">
+    <div class="col-md-4 offset-md-3">
 
       <h3>Has a referral:
         <mat-checkbox class="big-checkbox"
-                      [checked]="checkedRef "
-                      (click)="findVisits()">
+                      [(ngModel)]="checkedRef">
         </mat-checkbox>
       </h3>
 
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" (click)="findVisits()">Search</button>
     </div>
   </div>
   <hr *ngIf="dates.length==0">
@@ -82,16 +78,17 @@
     <div class="col-md-6 offset-md-3">
 
       <h2>Free spots: </h2>
-      <mat-selection-list dense [multiple]="false" #datesList>
-        <mat-list-option *ngFor="let spot of dates"
+      <mat-selection-list dense [multiple]="false"
+                          (selectionChange)="onDateSelection(datesList.selectedOptions.selected[0]?.value)" #datesList>
+        <mat-list-option *ngFor="let spot of dates" [value]="spot"
                          style="display:inline-block; width:50%; text-align:center;">
           {{spot | date:'HH:mm   dd.MM.yyyy '}}
         </mat-list-option>
       </mat-selection-list>
 
-
     </div>
   </div>
+
 
   <div class="row" *ngIf="dates.length==0 && dateSearchFinished">
     <div class="col-md-6 offset-md-3">
@@ -101,11 +98,23 @@
 
   <div class="row">
     <div class="col-md-auto offset-md-7">
-      <button (click)="onBackClick()" class="btn btn-dark mx-1">Back</button>
-      <button (click)="onBookClick()" class="btn btn-primary mx-1">Book</button>
+      <button (click)="onBackClick()"
+              class="btn btn-dark mx-1">
+        Back
+      </button>
+
+      <button (click)="onBookClick(saveDialog)"
+              [disabled]="!selectedDate && !bookingFinished"
+              class="btn btn-primary mx-1">
+        Book
+      </button>
     </div>
   </div>
 
 
+  <ng-template #saveDialog>
+    <h2 matDialogTitle align="center">Visit Saved</h2>
+    <h3 matDialogContent><em>Return to the main menu.</em></h3>
+  </ng-template>
 </div>
 

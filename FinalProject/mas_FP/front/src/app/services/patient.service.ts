@@ -39,9 +39,7 @@ export class PatientService {
   }
 
   addPatient(patient: Patient) {
-    this.http.post(API_URL + 'patient', patient).subscribe(
-      response => console.log(response)
-    );
+    this.http.post(API_URL + 'patient', patient).subscribe();
 
     this.patientList.push(patient);
     this.refreshList();

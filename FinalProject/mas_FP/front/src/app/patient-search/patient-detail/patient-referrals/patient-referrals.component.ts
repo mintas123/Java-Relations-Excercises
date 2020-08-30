@@ -6,7 +6,7 @@ import {DoctorService} from '../../../services/doctor.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {ReferralService} from '../../../services/referral.service';
-import {Visit} from '../../../model/visit';
+import {VisitHistory} from '../../../model/visitHistory';
 import {Doctor} from '../../../model/doctor';
 
 @Component({

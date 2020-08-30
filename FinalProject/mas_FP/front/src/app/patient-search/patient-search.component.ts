@@ -6,7 +6,7 @@ import {Patient} from '../model/patient';
 import {PatientService} from '../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {VisitService} from '../services/visit.service';
-import {Visit} from '../model/visit';
+import {VisitHistory} from '../model/visitHistory';
 import {logger} from 'codelyzer/util/logger';
 
 @Component({
