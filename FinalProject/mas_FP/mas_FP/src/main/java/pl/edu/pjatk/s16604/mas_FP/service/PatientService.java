@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pjatk.s16604.mas_FP.DTO.PatientDTO;
 import pl.edu.pjatk.s16604.mas_FP.DTO.ReferralDTO;
-import pl.edu.pjatk.s16604.mas_FP.DTO.VisitDTO;
+import pl.edu.pjatk.s16604.mas_FP.DTO.historyVisitDTO;
 import pl.edu.pjatk.s16604.mas_FP.entity.Appointment;
 import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
 import pl.edu.pjatk.s16604.mas_FP.entity.Person;
@@ -16,6 +16,8 @@ import pl.edu.pjatk.s16604.mas_FP.repository.PersonRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.ReferralRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,20 +95,21 @@ public class PatientService {
     }
 
 
-    public List<VisitDTO> searchPatientAppHistory(long patientId) {
+    public List<historyVisitDTO> searchPatientAppHistory(long patientId) {
         Optional<Patient> optionalPatient = patientRepository.getByPersonId(patientId);
         if (optionalPatient.isPresent()) {
             List<Appointment> appointments = appointmentRepository.getAllByPatient(optionalPatient.get());
-            List<VisitDTO> visitDTOList = new ArrayList<>();
+            List<historyVisitDTO> historyDTOList = new ArrayList<>();
             appointments.forEach(appointment ->
-                    visitDTOList.add(VisitDTO.builder()
+                    historyDTOList.add(historyVisitDTO.builder()
                             .visitDate(appointment.getDate())
                             .doctorName(appointment.getDoctor().getName())
                             .doctorLastName(appointment.getDoctor().getLastName())
                             .divisionName(appointment.getDoctor().getDivision().getName())
                             .build())
             );
-            return visitDTOList;
+            historyDTOList.sort(Comparator.comparing(historyVisitDTO::getVisitDate).reversed());
+            return historyDTOList;
         } else {
             return new ArrayList<>();
         }
@@ -126,6 +129,7 @@ public class PatientService {
                             .dateFrom(referral.getDateFrom())
                             .dateTo(referral.getDateTo()).build())
             );
+            referralDTOList.sort(Comparator.comparing(ReferralDTO::getDateTo).reversed());
             return referralDTOList;
         } else {
             return new ArrayList<>();

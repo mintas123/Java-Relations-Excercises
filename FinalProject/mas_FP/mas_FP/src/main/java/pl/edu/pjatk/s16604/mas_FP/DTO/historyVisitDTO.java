@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
-public class VisitDTO {
+public class historyVisitDTO {
     private LocalDateTime visitDate;
     private String doctorName;
     private String doctorLastName;

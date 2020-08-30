@@ -60,7 +60,7 @@ public class DoctorService {
         if (doctor == null) {
             throw new RuntimeException("No such doctor");
         } else {
-            return  doctor;
+            return doctor;
         }
     }
 
@@ -77,9 +77,15 @@ public class DoctorService {
 
     public List<LocalDateTime> searchByCriteria(Doctor doctor, Patient patient,
                                                 LocalDateTime dateFrom, LocalDateTime dateTo, boolean hasReferral) {
-        List<Appointment> appByDoc = appointmentRepository.getTakenByDocBetween(doctor, dateFrom, dateTo);
-        List<Appointment> appByPatient = appointmentRepository.getTakenByPatientBetween(patient, dateFrom, dateTo);
-        return Utils.getFreeSpots(appByDoc,appByPatient, dateFrom, dateTo, hasReferral);
+        List<Appointment> appByDoc = appointmentRepository.
+                getTakenByDocBetween(doctor,
+                        dateFrom.minusDays(1),
+                        dateTo.plusDays(1));
+        List<Appointment> appByPatient = appointmentRepository.
+                getTakenByPatientBetween(patient,
+                        dateFrom.minusDays(1),
+                        dateTo.plusDays(1));
+        return Utils.getFreeSpots(appByDoc, appByPatient, dateFrom, dateTo, hasReferral);
     }
 
     public List<Appointment> getSchedule(Long doctorId, LocalDate dateFrom, LocalDate dateTo) {

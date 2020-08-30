@@ -196,14 +196,14 @@ public class DataInitializer {
 
         visitService.addDataToAppointment(meeting.getAppointmentId(), patient1.getPersonId(), doctor4.getPersonId()
                 , referral.getReferralId(), pres1.getPrescriptionId());
-        visitService.addDataToAppointment(meeting2.getAppointmentId(), patient1.getPersonId(), doctor.getPersonId()
+        visitService.addDataToAppointment(meeting2.getAppointmentId(), patient4.getPersonId(), doctor.getPersonId()
                 , referral2.getReferralId(), pres1.getPrescriptionId());
-        visitService.addDataToAppointment(meeting3.getAppointmentId(), patient2.getPersonId(), doctor.getPersonId()
+        visitService.addDataToAppointment(meeting3.getAppointmentId(), patient4.getPersonId(), doctor.getPersonId()
                 , referral3.getReferralId(), pres1.getPrescriptionId());
-        visitService.addDataToAppointment(meeting4.getAppointmentId(), patient3.getPersonId(), doctor.getPersonId());
+        visitService.addDataToAppointment(meeting4.getAppointmentId(), patient2.getPersonId(), doctor.getPersonId());
         visitService.addDataToAppointment(meeting5.getAppointmentId(), patient5.getPersonId(), doctor.getPersonId());
 
-        visitService.addDataToAppointment(teleMedicine.getAppointmentId(), patient6.getPersonId(), doctor2.getPersonId(), pres3.getPrescriptionId());
+        visitService.addDataToAppointment(teleMedicine.getAppointmentId(), patient4.getPersonId(), doctor2.getPersonId(), pres3.getPrescriptionId());
         visitService.addDataToAppointment(teleMedicine2.getAppointmentId(), patient7.getPersonId(), doctor5.getPersonId());
         visitService.addDataToAppointment(teleMedicine3.getAppointmentId(), patient6.getPersonId(), doctor5.getPersonId());
 

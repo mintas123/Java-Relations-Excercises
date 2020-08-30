@@ -1,7 +1,6 @@
 package pl.edu.pjatk.s16604.mas_FP.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.pjatk.s16604.mas_FP.DTO.DoctorDTO;
+import pl.edu.pjatk.s16604.mas_FP.DTO.MeetingDTO;
 import pl.edu.pjatk.s16604.mas_FP.DTO.PatientDTO;
 import pl.edu.pjatk.s16604.mas_FP.DTO.ReferralDTO;
-import pl.edu.pjatk.s16604.mas_FP.DTO.VisitDTO;
+import pl.edu.pjatk.s16604.mas_FP.DTO.historyVisitDTO;
 import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
 import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
 import pl.edu.pjatk.s16604.mas_FP.entity.Person;
@@ -50,6 +50,7 @@ public class Controller {
     @Autowired
     ReferralService referralService;
 
+
     // to search all patients
     @GetMapping({"/patient"})
     public List<Patient> getAllPatients() {
@@ -63,7 +64,7 @@ public class Controller {
 
     // patient details
     @GetMapping({"/patient/history/{patientId}"})
-    public List<VisitDTO> searchPatientAppHistory(@PathVariable long patientId) {
+    public List<historyVisitDTO> searchPatientAppHistory(@PathVariable long patientId) {
         return patientService.searchPatientAppHistory(patientId);
     }
 
@@ -95,24 +96,6 @@ public class Controller {
         return doctorService.getAllDoctors();
     }
 
-//    @GetMapping({"visit/{doctorId}/{patientId}/{dateFrom}/{dateTo}/{hasReferral}"})
-//    public List<LocalDateTime> getAllSpots
-
-
-    @GetMapping({"/patient/pesel/{pesel}"})
-    public List<Patient> searchPatientByPesel(@PathVariable String pesel) {
-        return patientService.searchPatientByPesel(pesel);
-    }
-
-    @GetMapping({"/person/pesel/{pesel}"})
-    public List<Person> searchByPesel(@PathVariable String pesel) {
-        return patientService.searchPersonByPesel(pesel);
-    }
-
-//    @GetMapping({"/doctor/{string}"})
-//    public List<Doctor> searchDoctorByIdOrName(@PathVariable String string) {
-//        return doctorService.searchDoctorByIdOrName(string);
-//    }
 
 
     @GetMapping({"/appointment/{doctorId}/{patientId}/{dateFromSt}/{dateToSt}/{hasReferral}"})
@@ -134,9 +117,39 @@ public class Controller {
         return new ArrayList<>();
     }
 
-
-    @PostMapping({"/patient/new"})
-    public void addPatient(@RequestBody Patient patient) {
-        patientService.searchAndCreatePatient(patient);
+    // booking of the meeting
+    @PostMapping(value = "/appointment")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void createMeeting(@RequestBody MeetingDTO meetingDTO) {
+        visitService.addMeeting(meetingDTO);
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @GetMapping({"/patient/pesel/{pesel}"})
+//    public List<Patient> searchPatientByPesel(@PathVariable String pesel) {
+//        return patientService.searchPatientByPesel(pesel);
+//    }
+//
+//    @GetMapping({"/person/pesel/{pesel}"})
+//    public List<Person> searchByPesel(@PathVariable String pesel) {
+//        return patientService.searchPersonByPesel(pesel);
+//    }
+
+//    @GetMapping({"/doctor/{string}"})
+//    public List<Doctor> searchDoctorByIdOrName(@PathVariable String string) {
+//        return doctorService.searchDoctorByIdOrName(string);
+//    }
