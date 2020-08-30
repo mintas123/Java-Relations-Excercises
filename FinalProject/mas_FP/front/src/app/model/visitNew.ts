@@ -1,4 +1,4 @@
-export class NewVisit {
+export class VisitNew {
 
 
   constructor(public doctorId: number,

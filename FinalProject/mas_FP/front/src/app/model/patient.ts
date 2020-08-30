@@ -3,9 +3,6 @@ import {Referral} from './referral';
 
 export class Patient {
 
-  public appointments: VisitHistory[];
-  public referrals: Referral[];
-
   constructor(
     public personId: number,
     public name: string,

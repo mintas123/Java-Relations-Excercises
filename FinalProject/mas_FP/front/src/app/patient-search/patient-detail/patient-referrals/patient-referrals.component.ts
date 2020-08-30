@@ -35,8 +35,7 @@ export class PatientReferralsComponent implements OnInit {
         this.referrals = referrals;
       }
     );
-    this.referrals = this.referralService.getRefferals();
-    console.log(this.referrals);
+    this.referrals = this.referralService.getReferrals();
     this.selectedPatient = this.patientService.getPatient(patientId);
   }
 

@@ -90,7 +90,7 @@
   </div>
 
 
-  <div class="row" *ngIf="dates.length==0 && dateSearchFinished">
+  <div class="row" *ngIf="dates.length==0 && dateSearchFinished && !bookingFinished">
     <div class="col-md-6 offset-md-3">
       <h2>There are no free spots left. </h2>
     </div>

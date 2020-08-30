@@ -72,10 +72,6 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
 
   }
 
-  getPatientId(patient) {
-    return patient.id;
-  }
-
   displayFn(subject) {
     return subject ? subject.name + ' ' + subject.lastName : undefined;
   }

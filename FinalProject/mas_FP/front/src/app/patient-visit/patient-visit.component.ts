@@ -12,7 +12,7 @@ import {VisitHistory} from '../model/visitHistory';
 import {VisitService} from '../services/visit.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {HttpClient} from '@angular/common/http';
-import {NewVisit} from '../model/newVisit';
+import {VisitNew} from '../model/visitNew';
 
 
 @Component({
@@ -92,7 +92,7 @@ export class PatientVisitComponent implements OnInit {
   onBookClick(ref: TemplateRef<any>) {
     this.openDialogWithRef(ref);
 
-    const newVisit = new NewVisit(
+    const newVisit = new VisitNew(
       this.selectedDoctor.personId,
       +this.patientId,
       this.selectedDate
@@ -119,7 +119,6 @@ export class PatientVisitComponent implements OnInit {
 
   findVisits() {
     if (this.startDate && this.endDate && this.selectedDoctor && this.selectedPatient) {
-      console.log('finding new dates..');
       this.visitService.getDatesBetween(this.selectedPatient.personId,
         this.selectedDoctor.personId,
         this.startDate, this.endDate, this.checkedRef);
@@ -157,7 +156,7 @@ export class PatientVisitComponent implements OnInit {
         option.divisionName.toLowerCase().includes(filterValue));
   }
 
-  // // for END picker
+  // // for END picker todo fix end and start dates
   // getMinEndDate() {
   //   console.log(' get min end date');
   //   if (this.startDate > this.minDateEnd) {

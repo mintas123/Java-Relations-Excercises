@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Referral} from '../model/referral';
-import {Patient} from '../model/patient';
-import {PatientService} from './patient.service';
 import {HttpClient} from '@angular/common/http';
 import {Subject} from 'rxjs';
 
@@ -12,24 +10,10 @@ const API_URL = 'http://localhost:8080/api/';
 })
 export class ReferralService {
 
-  constructor(private http: HttpClient,
-              private patientService: PatientService) {
+  constructor(private http: HttpClient) {
   }
 
-  referrals: Referral[] = [
-    // new Referral(0, 0, 0, false,
-    //   new Date(2020, 7, 15),
-    //   new Date(2020, 9, 15),
-    //   ),
-    // new Referral(1, 0, 0, true,
-    //   new Date(2020, 7, 15),
-    //   new Date(2020, 9, 15),
-    // ),
-    // new Referral(0, 1, 0, false,
-    //   new Date(2020, 7, 15),
-    //   new Date(2020, 9, 15),
-    // ),
-  ];
+  referrals: Referral[] = [];
   referralChanged = new Subject<Referral[]>();
 
   fetchReferrals(patientId: number) {
@@ -41,13 +25,8 @@ export class ReferralService {
     );
   }
 
-  getRefferals(): Referral[] {
+  getReferrals(): Referral[] {
     return this.referrals.slice();
   }
 
-  // findReferralByPatient(patient: Patient): Referral[] {
-  //   const referralCopy = this.referrals.slice();
-  //   // const patientId = this.patientService.getPatientId(patient);
-  //   return referralCopy.filter((referral: Referral) => referral.patient === patient.personId);
-  // }
 }
