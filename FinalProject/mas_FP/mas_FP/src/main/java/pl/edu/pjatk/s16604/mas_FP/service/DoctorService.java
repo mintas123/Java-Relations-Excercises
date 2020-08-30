@@ -4,18 +4,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pjatk.s16604.mas_FP.DTO.DoctorDTO;
-import pl.edu.pjatk.s16604.mas_FP.Utils;
+import pl.edu.pjatk.s16604.mas_FP.DateUtils;
 import pl.edu.pjatk.s16604.mas_FP.entity.Appointment;
 import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
 import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
 import pl.edu.pjatk.s16604.mas_FP.repository.AppointmentRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.DoctorRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,13 +46,6 @@ public class DoctorService {
         return doctorDTOList;
     }
 
-//    private List<LocalDateTime> getFreeSpots(List<Appointment> takenByDoc,
-//                                             List<Appointment> takenByPatient,
-//                                             LocalDate dateFrom, LocalDate dateTo,
-//                                             boolean ) {
-//        return Utils.getFreeSpots(takenByDoc, dateFrom, dateTo);
-//    }
-
     public Doctor searchDoctorById(long doctorId) {
         Doctor doctor = doctorRepository.getByPersonId(doctorId);
         if (doctor == null) {
@@ -64,17 +55,7 @@ public class DoctorService {
         }
     }
 
-    public List<Doctor> searchDoctorByIdOrName(String string) {
-        try {
-            long l = Long.parseLong(string);
-            Doctor byPersonId = doctorRepository.getByPersonId(l);
-            return Arrays.asList(byPersonId);
-        } catch (Exception e) {
-            System.out.println("NOT A NUMBER");
-        }
-        return doctorRepository.findAllByName(string);
-    }
-
+    // Search for free dates, where both patient and doc dont are free in the given period
     public List<LocalDateTime> searchByCriteria(Doctor doctor, Patient patient,
                                                 LocalDateTime dateFrom, LocalDateTime dateTo, boolean hasReferral) {
         List<Appointment> appByDoc = appointmentRepository.
@@ -85,10 +66,12 @@ public class DoctorService {
                 getTakenByPatientBetween(patient,
                         dateFrom.minusDays(1),
                         dateTo.plusDays(1));
-        return Utils.getFreeSpots(appByDoc, appByPatient, dateFrom, dateTo, hasReferral);
+        return DateUtils.getFreeSpots(appByDoc, appByPatient, dateFrom, dateTo, hasReferral);
     }
 
-    public List<Appointment> getSchedule(Long doctorId, LocalDate dateFrom, LocalDate dateTo) {
+
+    // get info about taken spots for a selected doctor in the given period
+    public List<Appointment> getSchedule(Long doctorId, LocalDateTime dateFrom, LocalDateTime dateTo) {
         Doctor doctor = doctorRepository.getByPersonId(doctorId);
         if (doctor != null) {
             return doctor.getVisits().stream()

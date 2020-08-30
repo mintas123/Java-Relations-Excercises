@@ -6,7 +6,6 @@ import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
 import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +16,7 @@ public interface AppointmentRepository extends AppointmentBaseRepository<Appoint
 
     Appointment getByAppointmentId(long id);
 
-    List<Appointment> getAllByPatient(Patient patient);
+    List<Appointment> getAllByPatientOrderByDate(Patient patient);
 
 
     @Query("SELECT a from Appointment  a where  (a.doctor = ?1 or a.patient = ?2) and a.date = ?3 ")

@@ -71,6 +71,16 @@ public class DataInitializer {
         Doctor doctor4 = new Doctor("Zbigniew", "Jamroz", "zbijam@gmail.com", "345654567", "12341234123", LocalDate.of(1993, Month.MAY, 22), Gender.MALE, 5234);
         Doctor doctor5 = new Doctor("Adrian", "Dalik", "addal@gmail.com", "543567654", "65101255857", LocalDate.of(1993, Month.MAY, 22), Gender.MALE, 5344);
         Doctor doctor6 = new Doctor("Miłosz", "Bliski", "bliskiOrazMily@gmail.com", "345654678", "66042675885", LocalDate.of(1993, Month.MAY, 22), Gender.MALE, 9000);
+
+        doctor.addBikeCommute();
+        doctor.addPublicTransportCommute();
+        doctor2.addCarCommute("WX1821D");
+        doctor3.addCarCommute("WE112PA");
+        doctor3.addBikeCommute();
+        doctor4.addPublicTransportCommute();
+        doctor5.addPublicTransportCommute();
+        doctor6.addPublicTransportCommute();
+
         doctorService.saveDoctor(doctor);
         doctorService.saveDoctor(doctor2);
         doctorService.saveDoctor(doctor3);
@@ -106,6 +116,7 @@ public class DataInitializer {
         divisionService.saveDivision(div1);
         divisionService.saveDivision(div2);
         divisionService.saveDivision(div3);
+
         divisionService.addToStaff(div1.getDivisionId(), doctor.getPersonId());
         divisionService.addHead(div1.getDivisionId(), doctor2.getPersonId());
         divisionService.addToStaff(div1.getDivisionId(), doctor2.getPersonId());
@@ -113,7 +124,6 @@ public class DataInitializer {
         divisionService.addToStaff(div2.getDivisionId(), doctor4.getPersonId());
         divisionService.addToStaff(div3.getDivisionId(), doctor5.getPersonId());
         divisionService.addToStaff(div3.getDivisionId(), doctor6.getPersonId());
-
 
         Patient patient1 = new Patient("Anna", "Małowiecka", "anama@gmail.com", "432523634", "10301608556", LocalDate.of(2010, Month.OCTOBER, 16), Gender.FEMALE, LocalDate.now(), "AXA", false);
         Patient patient2 = new Patient("Zofia", "Śliwińska", "zsliwinska@gmail.com", "798369528", "10200158966", LocalDate.of(2000, Month.JANUARY, 1), Gender.FEMALE, LocalDate.now(), "X", true);
@@ -206,6 +216,20 @@ public class DataInitializer {
         visitService.addDataToAppointment(teleMedicine.getAppointmentId(), patient4.getPersonId(), doctor2.getPersonId(), pres3.getPrescriptionId());
         visitService.addDataToAppointment(teleMedicine2.getAppointmentId(), patient7.getPersonId(), doctor5.getPersonId());
         visitService.addDataToAppointment(teleMedicine3.getAppointmentId(), patient6.getPersonId(), doctor5.getPersonId());
+
+        System.out.println(Division.getMeanByDiv(div1));
+        System.out.println("Doctor1 schedule for 7.09.2020: ");
+        System.out.println(doctorService.getSchedule(doctor.getPersonId(),
+                LocalDateTime.of(2020,Month.SEPTEMBER,7,0,0),
+                LocalDateTime.of(2020,Month.SEPTEMBER,7,23,0)));
+
+
+
+
+
+
+
+
 
 //        divisionService.addToBuildings(div1.getDivisionId(),b1.getBuildingId());
 //        divisionService.addToBuildings(div2.getDivisionId(),b2.getBuildingId());

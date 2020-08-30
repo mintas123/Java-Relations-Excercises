@@ -18,7 +18,6 @@ import pl.edu.pjatk.s16604.mas_FP.DTO.ReferralDTO;
 import pl.edu.pjatk.s16604.mas_FP.DTO.historyVisitDTO;
 import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
 import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
-import pl.edu.pjatk.s16604.mas_FP.entity.Person;
 import pl.edu.pjatk.s16604.mas_FP.service.DivisionService;
 import pl.edu.pjatk.s16604.mas_FP.service.DoctorService;
 import pl.edu.pjatk.s16604.mas_FP.service.PatientService;
@@ -97,7 +96,6 @@ public class Controller {
     }
 
 
-
     @GetMapping({"/appointment/{doctorId}/{patientId}/{dateFromSt}/{dateToSt}/{hasReferral}"})
     public List<LocalDateTime> getSpots(@PathVariable long doctorId,
                                         @PathVariable long patientId,
@@ -108,11 +106,11 @@ public class Controller {
         Patient patient = patientService.searchPatientById(patientId);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime dateFrom = LocalDate.parse(dateFromSt,dtf).atStartOfDay();
-        LocalDateTime dateTo = LocalDate.parse(dateToSt,dtf).atStartOfDay();
+        LocalDateTime dateFrom = LocalDate.parse(dateFromSt, dtf).atStartOfDay();
+        LocalDateTime dateTo = LocalDate.parse(dateToSt, dtf).atStartOfDay();
 
         if (patient != null && doctor != null) {
-            return doctorService.searchByCriteria(doctor,patient, dateFrom, dateTo, hasReferral);
+            return doctorService.searchByCriteria(doctor, patient, dateFrom, dateTo, hasReferral);
         }
         return new ArrayList<>();
     }
@@ -125,31 +123,3 @@ public class Controller {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @GetMapping({"/patient/pesel/{pesel}"})
-//    public List<Patient> searchPatientByPesel(@PathVariable String pesel) {
-//        return patientService.searchPatientByPesel(pesel);
-//    }
-//
-//    @GetMapping({"/person/pesel/{pesel}"})
-//    public List<Person> searchByPesel(@PathVariable String pesel) {
-//        return patientService.searchPersonByPesel(pesel);
-//    }
-
-//    @GetMapping({"/doctor/{string}"})
-//    public List<Doctor> searchDoctorByIdOrName(@PathVariable String string) {
-//        return doctorService.searchDoctorByIdOrName(string);
-//    }

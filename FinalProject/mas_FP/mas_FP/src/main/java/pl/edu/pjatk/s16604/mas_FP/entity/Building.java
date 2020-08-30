@@ -48,7 +48,8 @@ public class Building {
 
     @OneToMany(
             fetch = FetchType.EAGER,
-            mappedBy = "building")
+            mappedBy = "building",
+            orphanRemoval = true)
     private Set<Room> rooms;
 
     public Building(@NotBlank String address) {

@@ -50,6 +50,16 @@ public class VisitService {
     private PrescriptionRepository prescriptionRepository;
 
 
+    public void saveAppointment(Appointment appointment) {
+        appointmentRepository.save(appointment);
+    }
+
+    public void cancelAppointment(Long appointmentId) {
+        appointmentRepository.deleteById(appointmentId);
+    }
+
+
+
     // checking if there is already entry in the database (only to happen when manually creating POST)
     public void addMeeting(MeetingDTO meetingDTO) {
         Doctor doctor = doctorRepository.getByPersonId(meetingDTO.getDoctorId());
@@ -68,11 +78,7 @@ public class VisitService {
 
     }
 
-    public void saveAppointment(Appointment appointment) {
-        appointmentRepository.save(appointment);
-    }
-
-
+    // method overloading based on whether we want to add specific data or not
     public void addDataToAppointment(Long appointmentId, Long patientId, Long doctorId, Long referralId, Long prescId) {
         Appointment appointment = appointmentRepository.getByAppointmentId(appointmentId);
         Doctor doctor = doctorRepository.getByPersonId(doctorId);
@@ -111,7 +117,7 @@ public class VisitService {
             patientRepository.save(patient);
         }
     }
-
+    // without referral, you dont need to have referral for a next visit, just wat some drugs
     public void addDataToAppointment(Long appointmentId, Long patientId, Long doctorId, Long prescId) {
         Appointment appointment = appointmentRepository.getByAppointmentId(appointmentId);
         Doctor doctor = doctorRepository.getByPersonId(doctorId);
@@ -143,7 +149,7 @@ public class VisitService {
             patientRepository.save(patient);
         }
     }
-
+    // without referral nor prescription, you have something checked up and no need for drugs & visits
     public void addDataToAppointment(Long appointmentId, Long patientId, Long doctorId) {
         Appointment appointment = appointmentRepository.getByAppointmentId(appointmentId);
         Doctor doctor = doctorRepository.getByPersonId(doctorId);
@@ -163,7 +169,4 @@ public class VisitService {
         }
     }
 
-    public void cancelAppointment(Long appointmentId) {
-        appointmentRepository.deleteById(appointmentId);
-    }
 }

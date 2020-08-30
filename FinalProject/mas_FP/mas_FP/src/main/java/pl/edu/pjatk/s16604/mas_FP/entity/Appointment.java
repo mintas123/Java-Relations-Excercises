@@ -61,10 +61,6 @@ public abstract class Appointment {
         return "Appointment{" +
                 "appointmentId=" + appointmentId +
                 ", date=" + date +
-//                ", doctor=" + doctor +
-//                ", patient=" + patient +
-//                ", referral=" + referral +
-//                ", prescription=" + prescription +
                 '}';
     }
 }

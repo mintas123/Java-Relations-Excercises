@@ -103,15 +103,17 @@ public class DivisionService {
         }
     }
 
-    public Double getDivMean(Long divisionId) {
+    public void removeFromBuilding(Long divisionId, Long buildingId) {
+        Building building = buildingRepository.getAllByBuildingId(buildingId);
         Division division = divisionRepository.getAllByDivisionId(divisionId);
-        if (division != null && !division.getStaff().isEmpty()) {
-            int empCount = division.getStaff().size();
-            double sum = division.getStaff().stream().mapToDouble(Doctor::getSalary).sum();
-            return sum / empCount;
+        if (building != null && division != null) {
+            if (division.getBuildings().contains(building) && building.getDivisions().contains(division)) {
+                division.removeBuilding(building);
+                building.removeDivision(division);
+                divisionRepository.save(division);
+                buildingRepository.save(building);
+            }
         }
-        return 0.0;
     }
-
 
 }

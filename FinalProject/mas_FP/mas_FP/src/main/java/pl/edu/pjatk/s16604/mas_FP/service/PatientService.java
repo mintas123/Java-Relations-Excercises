@@ -16,7 +16,6 @@ import pl.edu.pjatk.s16604.mas_FP.repository.PersonRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.ReferralRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -31,27 +30,9 @@ public class PatientService {
     private AppointmentRepository appointmentRepository;
     @Autowired
     private ReferralRepository referralRepository;
-    @Autowired
-    private PersonRepository personRepository;
 
 
-    public List<Patient> searchPatientByPesel(String pesel) {
-        return patientRepository.getAllByPeselStartingWith(pesel);
-    }
-
-    public List<Patient> searchPatientByString(String string) {
-        return patientRepository.getAllByNameContainsOrLastNameContainsOrPeselContains(string, string, string);
-    }
-
-    public Patient searchPatientById(long patientId) {
-        Optional<Patient> optionalPatient = patientRepository.getByPersonId(patientId);
-        if (optionalPatient.isPresent()) {
-            return optionalPatient.get();
-        } else {
-            throw new RuntimeException("No such patient");
-        }
-    }
-
+    // Update patient from the JSON
     public void updatePatient(long id, PatientDTO dto) {
         Patient patient = patientRepository.getByPersonId(id).get();
         patient.setName(dto.getName());
@@ -69,7 +50,7 @@ public class PatientService {
         patientRepository.save(patient);
 
     }
-
+    // Create patient from the JSON
     public void addPatient(PatientDTO patient) {
         Patient newPatient = new Patient(patient.getName(),
                 patient.getLastName(),
@@ -82,23 +63,40 @@ public class PatientService {
                 patient.getInsuranceProvider(),
                 patient.isVIP()
         );
-        patientRepository.save(newPatient);
+        searchAndCreatePatient(newPatient);
 
-    }
-
-    public List<Person> searchPersonByPesel(String pesel) {
-        return personRepository.getAllByPeselStartingWith(pesel);
     }
 
     public List<Patient> findAllPatient() {
         return patientRepository.findAll();
     }
 
+    public List<Patient> searchPatientByString(String string) {
+        return patientRepository.getAllByNameContainsOrLastNameContainsOrPeselContains(string, string, string);
+    }
 
+    public Patient searchPatientById(long patientId) {
+        Optional<Patient> optionalPatient = patientRepository.getByPersonId(patientId);
+        if (optionalPatient.isPresent()) {
+            return optionalPatient.get();
+        } else {
+            throw new RuntimeException("No such patient");
+        }
+    }
+
+    public void searchAndCreatePatient(Patient patient) {
+        Optional<Patient> optionalPatient = patientRepository.getByPersonId(patient.getPersonId());
+        if (optionalPatient.isEmpty()) {
+            patientRepository.save(patient);
+        }
+    }
+
+
+    //return visits the patient has in the system - both past and future
     public List<historyVisitDTO> searchPatientAppHistory(long patientId) {
         Optional<Patient> optionalPatient = patientRepository.getByPersonId(patientId);
         if (optionalPatient.isPresent()) {
-            List<Appointment> appointments = appointmentRepository.getAllByPatient(optionalPatient.get());
+            List<Appointment> appointments = appointmentRepository.getAllByPatientOrderByDate(optionalPatient.get());
             List<historyVisitDTO> historyDTOList = new ArrayList<>();
             appointments.forEach(appointment ->
                     historyDTOList.add(historyVisitDTO.builder()
@@ -114,7 +112,7 @@ public class PatientService {
             return new ArrayList<>();
         }
     }
-
+    //return referrals the patient has in the system - both past and future
     public List<ReferralDTO> searchPatientRefHistory(long patientId) {
         Optional<Patient> optionalPatient = patientRepository.getByPersonId(patientId);
         if (optionalPatient.isPresent()) {
@@ -133,13 +131,6 @@ public class PatientService {
             return referralDTOList;
         } else {
             return new ArrayList<>();
-        }
-    }
-
-    public void searchAndCreatePatient(Patient patient) {
-        Optional<Patient> optionalPatient = patientRepository.getByPersonId(patient.getPersonId());
-        if (optionalPatient.isEmpty()) {
-            patientRepository.save(patient);
         }
     }
 

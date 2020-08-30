@@ -8,7 +8,7 @@ import java.util.Optional;
 @Transactional
 public interface MeetingRepository extends AppointmentBaseRepository<Meeting> {
 
-   Optional<Meeting> getAllByAppointmentId(long id);
+    Optional<Meeting> getAllByAppointmentId(long id);
 
 
 }

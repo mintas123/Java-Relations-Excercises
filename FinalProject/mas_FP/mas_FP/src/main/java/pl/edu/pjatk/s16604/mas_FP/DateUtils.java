@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Utils {
+public class DateUtils {
 
     public static List<LocalDateTime> getFreeSpots(List<Appointment> takenByDoc,
                                                    List<Appointment> takenByPatient,

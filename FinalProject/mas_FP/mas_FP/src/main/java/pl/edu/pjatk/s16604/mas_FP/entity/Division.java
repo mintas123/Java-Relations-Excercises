@@ -46,7 +46,7 @@ public class Division {
     @OneToMany(
             fetch = FetchType.EAGER,
             mappedBy = "personId")
-    private Set<Doctor> staff;
+    private Set<Doctor> staff = new HashSet<>();
 
 
     public Division(@NotBlank String name, @NotBlank String description) {
@@ -78,6 +78,14 @@ public class Division {
         }
     }
 
+    public static double getMeanByDiv(Division division) {
+        if (division != null && division.getStaff().size() > 0) {
+            int empCount = division.getStaff().size();
+            double sum = division.getStaff().stream().mapToDouble(Doctor::getSalary).sum();
+            return sum / empCount;
+        }
+        return 0.0;
+    }
 
     @Override
     public String toString() {

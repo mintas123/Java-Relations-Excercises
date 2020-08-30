@@ -4,10 +4,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pjatk.s16604.mas_FP.entity.Doctor;
-import pl.edu.pjatk.s16604.mas_FP.entity.Patient;
 import pl.edu.pjatk.s16604.mas_FP.entity.Referral;
 import pl.edu.pjatk.s16604.mas_FP.repository.DoctorRepository;
-import pl.edu.pjatk.s16604.mas_FP.repository.PatientRepository;
 import pl.edu.pjatk.s16604.mas_FP.repository.ReferralRepository;
 
 import java.util.ArrayList;
@@ -24,9 +22,6 @@ public class ReferralService {
 
     @Autowired
     private DoctorRepository doctorRepository;
-
-    @Autowired
-    private PatientRepository patientRepository;
 
 
     public void saveReferral(Referral referral) {
@@ -49,11 +44,4 @@ public class ReferralService {
         return new ArrayList<>();
     }
 
-    public List<Referral> getAllByPatient(Long patientId) {
-        Optional<Patient> patientOptional = patientRepository.getByPersonId(patientId);
-        if (patientOptional.isPresent()) {
-            return referralRepository.getAllByPatient(patientOptional.get());
-        }
-        return new ArrayList<>();
-    }
 }

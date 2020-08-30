@@ -50,6 +50,7 @@ public abstract class Person {
 
     @Size(min = 11, max = 11, message = "PESEL is 11 digits long!")
     @NotNull
+    @Column(unique = true)
     private String pesel;
 
     @Past
