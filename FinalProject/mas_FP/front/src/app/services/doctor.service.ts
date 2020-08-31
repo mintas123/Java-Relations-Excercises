@@ -18,8 +18,7 @@ export class DoctorService {
   doctorsChanged = new Subject<Doctor[]>();
 
 
-  private doctorList: Doctor[] = [
-  ];
+  private doctorList: Doctor[] = [];
 
 
   fetchDoctors() {

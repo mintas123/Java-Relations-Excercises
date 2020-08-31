@@ -48,16 +48,15 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
     );
   }
 
-  onNewPatient() {
+
+  onNewPatientClick() {
     this.router.navigate(['/new'], {relativeTo: this.route});
   }
 
+  onSelectPatient(value: Patient) {
+    this.patientService.patientSelected.emit(value);
+    this.router.navigate([value.personId], {relativeTo: this.route});
 
-  initFilter() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
   }
 
   onPatientClick() {
@@ -66,14 +65,16 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
 
   }
 
-  selectPatient(value: Patient) {
-    this.patientService.patientSelected.emit(value);
-    this.router.navigate([value.personId], {relativeTo: this.route});
-
-  }
-
   displayFn(subject) {
     return subject ? subject.name + ' ' + subject.lastName : undefined;
+  }
+
+
+  private initFilter() {
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
   private _filter(value: string): Patient[] {
@@ -87,6 +88,7 @@ export class PatientSearchComponent implements OnInit, OnDestroy {
         option.lastName.toLowerCase().includes(filterValue) ||
         option.pesel.indexOf(filterValue) === 0);
   }
+
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

@@ -15,7 +15,7 @@
 
           <mat-autocomplete autoActiveFirstOption
                             #auto="matAutocomplete"
-                            (optionSelected)='selectDoctor($event.option.value)'
+                            (optionSelected)='onSelectDoctor($event.option.value)'
                             [displayWith]="displayFn">
             <mat-option *ngFor="let option of filteredOptions | async"
                         [value]="option"
@@ -35,6 +35,7 @@
         <mat-label>Start date</mat-label>
         <input [min]="minDateStart" [max]="maxDateStart"
                [(ngModel)]="startDate" matInput
+               (ngModelChange)="updateEndDate()"
                [matDatepicker]="pickerStart">
         <mat-datepicker-toggle matSuffix
                                [for]="pickerStart">
@@ -45,8 +46,9 @@
 
       <mat-form-field appearance="fill">
         <mat-label>End date</mat-label>
-        <input [min]="minDateStart" [max]="maxDateEnd"
+        <input [min]="minDateEnd" [max]="maxDateEnd"
                [(ngModel)]="endDate" matInput
+               (ngModelChange)="updateStartDate()"
                [matDatepicker]="pickerEnd">
         <mat-datepicker-toggle matSuffix
                                [for]="pickerEnd">
@@ -69,7 +71,11 @@
 
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" (click)="findVisits()">Search</button>
+      <button class="btn btn-primary"
+              (click)="findVisits()"
+              [disabled]="!startDate && !endDate && !selectedDoctor">
+        Search
+      </button>
     </div>
   </div>
   <hr *ngIf="dates.length==0">

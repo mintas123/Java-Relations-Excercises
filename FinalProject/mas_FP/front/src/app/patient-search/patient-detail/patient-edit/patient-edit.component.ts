@@ -15,7 +15,7 @@ export class PatientEditComponent implements OnInit {
   patientForm: FormGroup;
   selectedPatient: Patient;
 
-  today = new Date(Date.now());
+  today = new Date().toISOString().split('T')[0];
 
 
   constructor(private router: Router,
@@ -24,17 +24,13 @@ export class PatientEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.patientId = this.route.snapshot.params.id;
     this.selectedPatient = this.patientService.getPatient(this.patientId);
     this.initForm();
-
   }
 
 
   private initForm() {
-    console.log(this.selectedPatient);
-
     this.patientForm = new FormGroup({
       name: new FormControl(this.selectedPatient.name, Validators.required),
       lastName: new FormControl(this.selectedPatient.lastName, Validators.required),

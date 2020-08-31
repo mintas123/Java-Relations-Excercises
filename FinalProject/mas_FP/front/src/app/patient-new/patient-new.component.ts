@@ -16,6 +16,8 @@ export class PatientNewComponent implements OnInit {
   id: number;
   patientForm: FormGroup;
 
+  today = new Date().toISOString().split('T')[0];
+
   constructor(private location: Location,
               private route: ActivatedRoute,
               private router: Router,

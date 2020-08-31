@@ -14,7 +14,7 @@
 
         <mat-autocomplete autoActiveFirstOption
                           #auto="matAutocomplete"
-                          (optionSelected)='selectPatient($event.option.value)'
+                          (optionSelected)='onSelectPatient($event.option.value)'
                           [displayWith]="displayFn">
           <mat-option *ngFor="let option of filteredOptions | async"
                       [value]="option"
@@ -27,7 +27,7 @@
         </mat-autocomplete>
       </mat-form-field>
 
-      <button type="button" (click)="onNewPatient()" class="btn btn-dark mx-1">New </button>
+      <button type="button" (click)="onNewPatientClick()" class="btn btn-dark mx-1">New </button>
     </form>
   </div>
 </div>

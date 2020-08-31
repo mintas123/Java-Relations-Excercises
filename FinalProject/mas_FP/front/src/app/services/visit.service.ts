@@ -32,8 +32,21 @@ export class VisitService {
       });
   }
 
+  addNewVisit(newVisit: VisitNew) {
+    const header = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+    this.http.post(API_URL + 'appointment', newVisit, {headers: header}).subscribe(
+      response => console.log(response)
+    );
+    this.dates = this.dates.slice(this.dates.indexOf(newVisit.date), 1);
+    this.datesChanged.next(this.dates);
+  }
+
+
   getVisits(): VisitHistory[] {
     return this.visits.slice();
+  }
+  getDates(): Date[] {
+    return this.dates.slice();
   }
 
   getDatesBetween(patientId: number, doctorId: number, dateFrom: Date, dateTo: Date, hasReferral: boolean) {
@@ -53,18 +66,6 @@ export class VisitService {
 
   }
 
-  getDates(): Date[] {
-    return this.dates.slice();
-  }
 
-  addNewVisit(newVisit: VisitNew) {
-    const header = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-    this.http.post(API_URL + 'appointment', newVisit, {headers: header}).subscribe(
-      response => console.log(response)
-    );
-    this.dates = this.dates.slice(this.dates.indexOf(newVisit.date), 1);
-    this.datesChanged.next(this.dates);
-
-  }
 
 }

@@ -21,21 +21,13 @@ export class PatientService {
   private patientList: Patient[] = [];
 
 
+
   fetchPatients() {
     this.http.get<Patient[]>(API_URL + 'patient').subscribe(
       (response: Patient[]) => {
         this.patientList = response;
         this.patientsChanged.next(response);
       });
-  }
-
-  getPatients(): Patient[] {
-    return this.patientList.slice();
-  }
-
-  getPatient(id: number): Patient {
-    this.fetchPatients();
-    return this.patientList.find(patient => patient.personId == id);
   }
 
   addPatient(patient: Patient) {
@@ -47,7 +39,6 @@ export class PatientService {
 
   updatePatient(id: number, patient: Patient) {
     this.http.put(API_URL + 'patient/' + id + '/edit', patient).subscribe(
-      response => console.log(response)
     );
 
     const updatedPatient = this.getPatient(id);
@@ -55,6 +46,16 @@ export class PatientService {
     this.patientList[index] = patient;
     this.refreshList();
   }
+
+  getPatients(): Patient[] {
+    return this.patientList.slice();
+  }
+
+  getPatient(id: number): Patient {
+    this.fetchPatients();
+    return this.patientList.find(patient => patient.personId == id);
+  }
+
 
   private refreshList() {
     this.patientsChanged.next(this.patientList.slice());

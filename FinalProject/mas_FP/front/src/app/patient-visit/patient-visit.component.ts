@@ -8,10 +8,8 @@ import {Doctor} from '../model/doctor';
 import {Patient} from '../model/patient';
 import {PatientService} from '../services/patient.service';
 import {Location} from '@angular/common';
-import {VisitHistory} from '../model/visitHistory';
 import {VisitService} from '../services/visit.service';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {HttpClient} from '@angular/common/http';
+import {MatDialog} from '@angular/material/dialog';
 import {VisitNew} from '../model/visitNew';
 
 
@@ -22,13 +20,16 @@ import {VisitNew} from '../model/visitNew';
 })
 export class PatientVisitComponent implements OnInit {
 
+// global restrictions
+  minGlobal = new Date();
+  maxGlobal = new Date();
 // start date picker
   minDateStart = new Date();
   maxDateStart = new Date();
 // end date picker
   minDateEnd = new Date();
   maxDateEnd = new Date();
-
+// selected
   startDate: Date;
   endDate: Date;
 
@@ -42,11 +43,13 @@ export class PatientVisitComponent implements OnInit {
 
   dates: Date[] = [];
   selectedDate: Date;
+
   myControl = new FormControl();
   options: Doctor[];
   filteredOptions: Observable<Doctor[]>;
 
-  subscription: Subscription;
+  doctorSub: Subscription;
+  dateSub: Subscription;
 
   constructor(private doctorService: DoctorService,
               private patientService: PatientService,
@@ -59,12 +62,13 @@ export class PatientVisitComponent implements OnInit {
 
   ngOnInit(): void {
     this.initFilter();
+    this.maxGlobal.setDate(this.minGlobal.getDate() + 90);
     this.maxDateStart.setDate(this.minDateStart.getDate() + 90);
     this.maxDateEnd.setDate(this.minDateStart.getDate() + 90);
 
 
     this.doctorService.fetchDoctors();
-    this.subscription = this.doctorService.doctorsChanged.subscribe(
+    this.doctorSub = this.doctorService.doctorsChanged.subscribe(
       (doctors: Doctor[]) => {
         this.options = doctors;
       }
@@ -97,13 +101,12 @@ export class PatientVisitComponent implements OnInit {
       +this.patientId,
       this.selectedDate
     );
-    console.log(newVisit);
     this.visitService.addNewVisit(newVisit);
     this.bookingFinished = true;
     return true;
   }
 
-  selectDoctor(value) {
+  onSelectDoctor(value) {
     this.doctorService.doctorSelected.emit(value);
     this.selectedPatient = this.patientService.getPatient(this.patientId);
 
@@ -111,6 +114,23 @@ export class PatientVisitComponent implements OnInit {
 
   getDoctorId(doc) {
     return this.doctorService.getDoctorId(doc);
+  }
+
+
+  updateStartDate() {
+    if (this.endDate < this.maxDateStart) {
+      this.maxDateStart = this.endDate;
+    } else if (this.maxGlobal >= this.endDate) {
+      this.maxDateStart = this.endDate;
+    }
+  }
+
+  updateEndDate() {
+    if (this.startDate > this.minDateEnd) {
+      this.minDateEnd = this.startDate;
+    } else if (this.minGlobal <= this.startDate) {
+      this.minDateEnd = this.startDate;
+    }
   }
 
   onDateSelection(date: Date) {
@@ -122,7 +142,7 @@ export class PatientVisitComponent implements OnInit {
       this.visitService.getDatesBetween(this.selectedPatient.personId,
         this.selectedDoctor.personId,
         this.startDate, this.endDate, this.checkedRef);
-      this.visitService.datesChanged.subscribe(
+      this.dateSub = this.visitService.datesChanged.subscribe(
         (dates: Date[]) => {
           this.dates = dates;
           this.dateSearchFinished = true;
@@ -131,6 +151,7 @@ export class PatientVisitComponent implements OnInit {
       this.dates = this.visitService.getDates();
     }
   }
+
 
   displayFn(subject) {
     return subject ? subject.name + ' ' + subject.lastName : undefined;
@@ -155,26 +176,5 @@ export class PatientVisitComponent implements OnInit {
         option.lastName.toLowerCase().includes(filterValue) ||
         option.divisionName.toLowerCase().includes(filterValue));
   }
-
-  // // for END picker todo fix end and start dates
-  // getMinEndDate() {
-  //   console.log(' get min end date');
-  //   if (this.startDate > this.minDateEnd) {
-  //     console.log(' start date is bigger');
-  //     console.log(this.startDate);
-  //     return this.startDate;
-  //   }
-  //   console.log(' start date is not bigger');
-  //   console.log(this.maxDateEnd);
-  //   return this.maxDateEnd;
-  // }
-  //
-  // // for START picker
-  // getMaxStartDate() {
-  //   if (this.endDate < this.maxDateStart) {
-  //     return  this.endDate;
-  //   }
-  //   return  this.maxDateStart;
-  // }
 
 }
